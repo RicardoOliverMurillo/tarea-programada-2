@@ -11,10 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-public class registrarNuevaAreaTrabajo extends JFrame {
+public class menuCentroAtencion extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField campoTextoAreaTrabajo;
 
 	/**
 	 * Launch the application.
@@ -23,7 +22,7 @@ public class registrarNuevaAreaTrabajo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					registrarNuevaAreaTrabajo frame = new registrarNuevaAreaTrabajo();
+					menuCentroAtencion frame = new menuCentroAtencion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,33 +34,28 @@ public class registrarNuevaAreaTrabajo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public registrarNuevaAreaTrabajo() {
+	public menuCentroAtencion() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 504, 194);
+		setBounds(100, 100, 506, 304);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Crear Nueva Área de Trabajo");
-		lblNewLabel.setBounds(150, 16, 227, 16);
+		JLabel lblNewLabel = new JLabel("Menú Centro Atención");
+		lblNewLabel.setBounds(184, 19, 140, 16);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_4 = new JLabel("Nueva Área de Trabajo:");
-		lblNewLabel_4.setBounds(19, 69, 227, 16);
-		contentPane.add(lblNewLabel_4);
-		
 		JButton botonRegresar = new JButton("Regresar");
-		botonRegresar.setBounds(363, 112, 117, 29);
+		botonRegresar.setBounds(383, 241, 117, 29);
 		contentPane.add(botonRegresar);
 		
-		campoTextoAreaTrabajo = new JTextField();
-		campoTextoAreaTrabajo.setBounds(235, 64, 197, 26);
-		contentPane.add(campoTextoAreaTrabajo);
-		campoTextoAreaTrabajo.setColumns(10);
+		JButton botonCrearCentro = new JButton("Crear centro de atención");
+		botonCrearCentro.setBounds(156, 61, 186, 29);
+		contentPane.add(botonCrearCentro);
 		
-		JButton botonCrearNuevaAreaTrabajo = new JButton("Crear");
-		botonCrearNuevaAreaTrabajo.setBounds(235, 112, 117, 29);
-		contentPane.add(botonCrearNuevaAreaTrabajo);
+		JButton botonAtender = new JButton("Atender paciente");
+		botonAtender.setBounds(174, 114, 150, 29);
+		contentPane.add(botonAtender);
 	}
 }

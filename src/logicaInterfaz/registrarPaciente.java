@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logicaInterfaz.registrarExperienciaEnfermero;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -96,7 +95,7 @@ public class registrarPaciente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				/////VALIDAR CUANDO NO SE ENVIA UN CODIGO FUNCIONARIO SINO NO ABRE LA VENTANA
-				new registrarExperienciaEnfermero().setVisible(true);
+				//new registrarExperienciaEnfermero().setVisible(true);
 			}
 		});
 		botonCrearPaciente.setBounds(608, 263, 208, 29);

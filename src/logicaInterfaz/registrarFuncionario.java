@@ -7,20 +7,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logicaInterfaz.registrarExperienciaEnfermero;
+
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+
 
 public class registrarFuncionario extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField campoTextoCedula;
 	private JTextField campoTextoNombre;
+	private JTextField campoTextoAreaTrabajo;
 
 	/**
 	 * Launch the application.
@@ -79,16 +83,32 @@ public class registrarFuncionario extends JFrame {
 		lblNewLabel_4.setBounds(35, 197, 208, 16);
 		contentPane.add(lblNewLabel_4);
 		
-		JButton botonCrearAreaTrabajo = new JButton("Crear nueva área de trabajo");
-		botonCrearAreaTrabajo.setBounds(35, 301, 288, 29);
-		contentPane.add(botonCrearAreaTrabajo);
+		JComboBox comboBoxTipoFuncionario = new JComboBox();
+		comboBoxTipoFuncionario.addItem("Doctor");
+		comboBoxTipoFuncionario.addItem("Enfermero");
+		comboBoxTipoFuncionario.addItem("Secretario");
+		comboBoxTipoFuncionario.setBounds(174, 150, 165, 27);
+		contentPane.add(comboBoxTipoFuncionario);
+		
+		JDateChooser fechaIngreso = new JDateChooser();
+		fechaIngreso.setBounds(255, 197, 156, 26);
+		contentPane.add(fechaIngreso);
 		
 		JButton botonCrearFuncionario = new JButton("Crear Funcionario");
 		botonCrearFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				/////VALIDAR CUANDO NO SE ENVIA UN CODIGO FUNCIONARIO SINO NO ABRE LA VENTANA
-				new registrarExperienciaEnfermero().setVisible(true);
+				//SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
+				//String date = dFormat.format(fechaIngreso.getDate());
+				if (comboBoxTipoFuncionario.getSelectedItem().toString().equals("Enfermero")) {
+					dispose();
+					new registrarExperienciaEnfermero().setVisible(true);
+					/////VALIDAR CUANDO NO SE ENVIA UN CODIGO FUNCIONARIO SINO NO ABRE LA VENTANA
+				}else if(comboBoxTipoFuncionario.getSelectedItem().toString().equals("Doctor")) {
+					dispose();
+					new registrarInformacionAdicionalDoctor().setVisible(true);
+				}
+				
+				
 			}
 		});
 		botonCrearFuncionario.setBounds(608, 301, 208, 29);
@@ -98,20 +118,17 @@ public class registrarFuncionario extends JFrame {
 		botonRegresar.setBounds(699, 370, 117, 29);
 		contentPane.add(botonRegresar);
 		
-		JComboBox comboBoxTipoFuncionario = new JComboBox();
-		comboBoxTipoFuncionario.setBounds(174, 150, 165, 27);
-		contentPane.add(comboBoxTipoFuncionario);
-		
 		JLabel lblNewLabel_5 = new JLabel("Área de trabajo:");
 		lblNewLabel_5.setBounds(35, 255, 111, 16);
 		contentPane.add(lblNewLabel_5);
 		
-		JComboBox comboBoxAreaTrabajo = new JComboBox();
-		comboBoxAreaTrabajo.setBounds(164, 251, 165, 27);
-		contentPane.add(comboBoxAreaTrabajo);
-		
 		JButton botonEditarAreaTrabajo = new JButton("Editar una área de trabajo específica");
 		botonEditarAreaTrabajo.setBounds(321, 301, 288, 29);
 		contentPane.add(botonEditarAreaTrabajo);
+		
+		campoTextoAreaTrabajo = new JTextField();
+		campoTextoAreaTrabajo.setBounds(155, 250, 147, 26);
+		contentPane.add(campoTextoAreaTrabajo);
+		campoTextoAreaTrabajo.setColumns(10);
 	}
 }
