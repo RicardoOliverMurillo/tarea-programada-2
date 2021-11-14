@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logicaInterfaz.registrarExperienciaEnfermero;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
