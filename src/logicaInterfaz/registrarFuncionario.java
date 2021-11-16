@@ -10,13 +10,18 @@ import javax.swing.border.EmptyBorder;
 
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+
+import logicanegocios.CentroAtencion;
+import logicanegocios.Funcionario;
 
 
 public class registrarFuncionario extends JFrame {
@@ -97,16 +102,87 @@ public class registrarFuncionario extends JFrame {
 		JButton botonCrearFuncionario = new JButton("Crear Funcionario");
 		botonCrearFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
-				//String date = dFormat.format(fechaIngreso.getDate());
-				if (comboBoxTipoFuncionario.getSelectedItem().toString().equals("Enfermero")) {
-					dispose();
-					new registrarExperienciaEnfermero().setVisible(true);
-					/////VALIDAR CUANDO NO SE ENVIA UN CODIGO FUNCIONARIO SINO NO ABRE LA VENTANA
-				}else if(comboBoxTipoFuncionario.getSelectedItem().toString().equals("Doctor")) {
-					dispose();
-					new registrarInformacionAdicionalDoctor().setVisible(true);
-				}
+				
+				JFrame frame = new JFrame();
+				Funcionario funcionario;
+				String cedula = campoTextoCedula.getText();
+				String nombre = campoTextoNombre.getText();
+				String tipo = comboBoxTipoFuncionario.getSelectedItem().toString();
+				SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
+				String fecha = dFormat.format(fechaIngreso.getDate());
+				
+				if ((campoTextoCedula.getText().equals("")) || (campoTextoNombre.getText().equals(""))) {
+					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
+				} else {
+					
+					funcionario = new Funcionario(Integer.parseInt(cedula), nombre, tipo, fecha);
+					
+					if (comboBoxTipoFuncionario.getSelectedItem().toString().equals("Enfermero")) {
+						try {
+							if (funcionario.verificarFuncionario(Integer.parseInt(cedula))) {
+								JOptionPane.showMessageDialog(frame, "Cedula existente");
+								campoTextoCedula.setText("");
+								campoTextoNombre.setText("");
+							} else {
+								dispose();
+								new registrarExperienciaEnfermero(Integer.parseInt(cedula),nombre,tipo,fecha).setVisible(true);
+							}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+					}
+					
+					
+					
+					
+					else if(comboBoxTipoFuncionario.getSelectedItem().toString().equals("Doctor")) {
+						try {
+							if (funcionario.verificarFuncionario(Integer.parseInt(cedula))) {
+								JOptionPane.showMessageDialog(frame, "Cedula existente");
+								campoTextoCedula.setText("");
+								campoTextoNombre.setText("");
+							} else {
+								dispose();
+								new registrarInformacionAdicionalDoctor().setVisible(true);
+							}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						
+						
+						
+					}else if(comboBoxTipoFuncionario.getSelectedItem().toString().equals("Secretario")) {
+						
+						if ((campoTextoCedula.getText().equals("")) || (campoTextoNombre.getText().equals(""))) {
+							JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
+						} else {
+							funcionario = new Funcionario(Integer.parseInt(cedula), nombre, tipo, fecha);
+
+							try {
+								if (funcionario.verificarFuncionario(Integer.parseInt(cedula))) {
+									JOptionPane.showMessageDialog(frame, "Cedula existente");
+									campoTextoCedula.setText("");
+									campoTextoNombre.setText("");
+								} else {
+									funcionario.crearSecretario();
+									JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+									campoTextoCedula.setText("");
+									campoTextoNombre.setText("");
+								}
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+						}
+					}
+				}	
+				
+				
 				
 				
 			}

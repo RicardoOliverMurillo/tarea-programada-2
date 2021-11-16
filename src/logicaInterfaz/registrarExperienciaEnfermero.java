@@ -7,8 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logicanegocios.Funcionario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -34,11 +36,13 @@ public class registrarExperienciaEnfermero extends JFrame {
 			}
 		});
 	}
+	
+	public registrarExperienciaEnfermero() {};
 
 	/**
 	 * Create the frame.
 	 */
-	public registrarExperienciaEnfermero() {
+	public registrarExperienciaEnfermero(int pcedula, String pnombre, String ptipo, String pfechaIngreso) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 431, 259);
 		contentPane = new JPanel();
@@ -57,14 +61,6 @@ public class registrarExperienciaEnfermero extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("¿Ha dado capacitaciones a pacientes?");
 		lblNewLabel_2.setBounds(35, 107, 248, 16);
 		contentPane.add(lblNewLabel_2);
-		
-		JButton botonRegistrarEnfermero = new JButton("Registrar enfermero");
-		botonRegistrarEnfermero.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		botonRegistrarEnfermero.setBounds(35, 161, 159, 29);
-		contentPane.add(botonRegistrarEnfermero);
 		
 		JButton botonRegresar = new JButton("Regresar");
 		botonRegresar.addActionListener(new ActionListener() {
@@ -88,5 +84,41 @@ public class registrarExperienciaEnfermero extends JFrame {
 		comboBoxCargo.addItem("No");
 		comboBoxCapacitaciones.addItem("Si");
 		comboBoxCapacitaciones.addItem("No");
+		
+		JButton botonRegistrarEnfermero = new JButton("Registrar enfermero");
+		botonRegistrarEnfermero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame();
+				Funcionario funcionario;
+				if (comboBoxCargo.getSelectedItem().toString().equals("Si") && comboBoxCapacitaciones.getSelectedItem().toString().equals("Si")){
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 1,1);
+					funcionario.crearEnfermero();
+					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					dispose();
+					new registrarFuncionario().setVisible(true);
+				}else if (comboBoxCargo.getSelectedItem().toString().equals("Si") && comboBoxCapacitaciones.getSelectedItem().toString().equals("No")) {
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 1,0);
+					funcionario.crearEnfermero();
+					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					dispose();
+					new registrarFuncionario().setVisible(true);
+				}else if (comboBoxCargo.getSelectedItem().toString().equals("No") && comboBoxCapacitaciones.getSelectedItem().toString().equals("No")) {
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 0,0);
+					funcionario.crearEnfermero();
+					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					dispose();
+					new registrarFuncionario().setVisible(true);
+				}else if (comboBoxCargo.getSelectedItem().toString().equals("No") && comboBoxCapacitaciones.getSelectedItem().toString().equals("Si")) {
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 0,1);
+					funcionario.crearEnfermero();
+					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					dispose();
+					new registrarFuncionario().setVisible(true);
+				}
+				
+			}
+		});
+		botonRegistrarEnfermero.setBounds(35, 161, 159, 29);
+		contentPane.add(botonRegistrarEnfermero);
 	}
 }
