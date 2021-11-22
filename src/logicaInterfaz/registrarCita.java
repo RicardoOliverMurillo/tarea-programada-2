@@ -74,7 +74,7 @@ public class registrarCita extends JFrame {
 		lblNewLabel_3.setBounds(35, 154, 40, 16);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("Observación:");
+		JLabel lblNewLabel_4 = new JLabel("Observacion:");
 		lblNewLabel_4.setBounds(35, 197, 88, 16);
 		contentPane.add(lblNewLabel_4);
 		

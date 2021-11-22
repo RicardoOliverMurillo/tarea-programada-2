@@ -104,12 +104,12 @@ public class Cita {
 		action.insert(query);
 	}
 	
-	public List<Cita> getCitasRegistradas(int pcedula) throws SQLException {
+	public List<Cita> getCitasRegistradas(int pcedula) {
 		String query = "SELECT * FROM Citas WHERE Estado = 'Registrada' AND CedulaPaciente ="+pcedula+";";
 		return action.getCitaResgritada(query);
 	}
 	
-	public List<Cita> getCitasCanceladas(int pcedula) throws SQLException {
+	public List<Cita> getCitasCanceladas(int pcedula) {
 		String query = "SELECT * FROM Citas WHERE Estado = 'Cancelada por centro medico' AND CedulaPaciente ="+pcedula+";";
 		return action.getCitaResgritada(query);
 	}

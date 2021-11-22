@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class menuReportesPaciente extends JFrame {
 
@@ -36,34 +38,36 @@ public class menuReportesPaciente extends JFrame {
 	 */
 	public menuReportesPaciente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 504, 313);
+		setBounds(100, 100, 577, 364);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Reportes Paciente");
-		lblNewLabel.setBounds(197, 18, 117, 16);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(197, 18, 161, 16);
 		contentPane.add(lblNewLabel);
 		
 		JButton botonRegresar = new JButton("Regresar");
-		botonRegresar.setBounds(384, 240, 117, 29);
+		botonRegresar.setBounds(418, 269, 117, 29);
 		contentPane.add(botonRegresar);
 		
 		JButton botonCitas = new JButton("Citas asociadas al paciente");
-		botonCitas.setBounds(144, 63, 214, 29);
+		botonCitas.setBounds(144, 63, 245, 29);
 		contentPane.add(botonCitas);
 		
 		JButton botonDiagnostico = new JButton("Diagnósticos asociados al paciente");
-		botonDiagnostico.setBounds(123, 104, 266, 29);
+		botonDiagnostico.setBounds(144, 105, 245, 29);
 		contentPane.add(botonDiagnostico);
 		
 		JButton botonTratamientos = new JButton("Tratamientos asociados al paciente");
-		botonTratamientos.setBounds(133, 145, 248, 29);
+		botonTratamientos.setBounds(144, 146, 245, 29);
 		contentPane.add(botonTratamientos);
 		
 		JButton botonHospitalizacion = new JButton("Hospitalizaciones asociados al paciente");
-		botonHospitalizacion.setBounds(114, 186, 295, 29);
+		botonHospitalizacion.setBounds(144, 186, 245, 29);
 		contentPane.add(botonHospitalizacion);
 	}
 }

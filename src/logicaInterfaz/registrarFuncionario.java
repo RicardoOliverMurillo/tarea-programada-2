@@ -30,6 +30,7 @@ public class registrarFuncionario extends JFrame {
 	private JTextField campoTextoCedula;
 	private JTextField campoTextoNombre;
 	private JTextField campoTextoAreaTrabajo;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -52,7 +53,7 @@ public class registrarFuncionario extends JFrame {
 	 */
 	public registrarFuncionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 822, 433);
+		setBounds(100, 100, 872, 477);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,7 +63,7 @@ public class registrarFuncionario extends JFrame {
 		lblNewLabel.setBounds(367, 19, 165, 16);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Cédula:");
+		JLabel lblNewLabel_1 = new JLabel("Cedula:");
 		lblNewLabel_1.setBounds(35, 69, 61, 16);
 		contentPane.add(lblNewLabel_1);
 		
@@ -84,7 +85,7 @@ public class registrarFuncionario extends JFrame {
 		lblNewLabel_3.setBounds(35, 154, 136, 16);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("Fecha de ingreso a la institución:");
+		JLabel lblNewLabel_4 = new JLabel("Fecha de ingreso a la institucion:");
 		lblNewLabel_4.setBounds(35, 197, 208, 16);
 		contentPane.add(lblNewLabel_4);
 		
@@ -187,24 +188,42 @@ public class registrarFuncionario extends JFrame {
 				
 			}
 		});
-		botonCrearFuncionario.setBounds(608, 301, 208, 29);
+		botonCrearFuncionario.setBounds(313, 352, 147, 29);
 		contentPane.add(botonCrearFuncionario);
 		
 		JButton botonRegresar = new JButton("Regresar");
-		botonRegresar.setBounds(699, 370, 117, 29);
+		botonRegresar.setBounds(729, 398, 117, 29);
 		contentPane.add(botonRegresar);
 		
-		JLabel lblNewLabel_5 = new JLabel("Área de trabajo:");
+		JLabel lblNewLabel_5 = new JLabel("Area de trabajo:");
 		lblNewLabel_5.setBounds(35, 255, 111, 16);
 		contentPane.add(lblNewLabel_5);
 		
-		JButton botonEditarAreaTrabajo = new JButton("Editar una área de trabajo específica");
-		botonEditarAreaTrabajo.setBounds(321, 301, 288, 29);
+		JButton botonEditarAreaTrabajo = new JButton("Editar una Area de trabajo especifica");
+		botonEditarAreaTrabajo.setBounds(51, 352, 252, 29);
 		contentPane.add(botonEditarAreaTrabajo);
 		
 		campoTextoAreaTrabajo = new JTextField();
 		campoTextoAreaTrabajo.setBounds(155, 250, 147, 26);
 		contentPane.add(campoTextoAreaTrabajo);
 		campoTextoAreaTrabajo.setColumns(10);
+		
+		JLabel lblNewLabel_6 = new JLabel("Contrasenna temporal");
+		lblNewLabel_6.setBounds(470, 70, 111, 14);
+		contentPane.add(lblNewLabel_6);
+		
+		textField = new JTextField();
+		textField.setBounds(591, 67, 208, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnCrearCuenta = new JButton("Crear cuenta");
+		btnCrearCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnCrearCuenta.setBounds(478, 352, 117, 29);
+		contentPane.add(btnCrearCuenta);
 	}
 }

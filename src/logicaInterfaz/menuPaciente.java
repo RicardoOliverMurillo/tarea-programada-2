@@ -10,6 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class menuPaciente extends JFrame {
 
@@ -36,30 +41,55 @@ public class menuPaciente extends JFrame {
 	 */
 	public menuPaciente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 506, 304);
+		setBounds(100, 100, 634, 412);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Menú Paciente");
-		lblNewLabel.setBounds(210, 17, 97, 16);
+		JLabel lblNewLabel = new JLabel("Menu Paciente");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(226, 11, 148, 16);
 		contentPane.add(lblNewLabel);
 		
-		JButton botonRegresar = new JButton("Regresar");
-		botonRegresar.setBounds(383, 241, 117, 29);
+		JButton botonRegresar = new JButton("Cerrar sesion");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new LoginPage().setVisible(true);
+			}
+		});
+		botonRegresar.setBounds(470, 322, 117, 29);
 		contentPane.add(botonRegresar);
 		
 		JButton botonSolicitarCita = new JButton("Solicitar cita");
-		botonSolicitarCita.setBounds(197, 61, 117, 29);
+		botonSolicitarCita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new registrarCita().setVisible(true);
+			}
+		});
+		botonSolicitarCita.setBounds(237, 74, 117, 29);
 		contentPane.add(botonSolicitarCita);
 		
 		JButton botonCancelarCita = new JButton("Cancelar cita");
-		botonCancelarCita.setBounds(197, 114, 117, 29);
+		botonCancelarCita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				try {
+					new cancelarCita().setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		botonCancelarCita.setBounds(237, 132, 117, 29);
 		contentPane.add(botonCancelarCita);
 		
 		JButton botonReportesPaciente = new JButton("Reportes");
-		botonReportesPaciente.setBounds(197, 172, 117, 29);
+		botonReportesPaciente.setBounds(237, 188, 117, 29);
 		contentPane.add(botonReportesPaciente);
 	}
 }

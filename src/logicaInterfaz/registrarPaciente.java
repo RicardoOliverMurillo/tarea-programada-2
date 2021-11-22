@@ -31,6 +31,7 @@ public class registrarPaciente extends JFrame {
 	private JTextField campoTextoLugarResidencia;
 	private JTextField campoTextoTelefono;
 	private JTextField campoTextoOtroTelefono;
+	private JTextField tempPassTextField;
 
 	/**
 	 * Launch the application.
@@ -53,7 +54,7 @@ public class registrarPaciente extends JFrame {
 	 */
 	public registrarPaciente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 840, 425);
+		setBounds(100, 100, 869, 444);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -63,7 +64,7 @@ public class registrarPaciente extends JFrame {
 		lblNewLabel.setBounds(367, 19, 165, 16);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Cédula:");
+		JLabel lblNewLabel_1 = new JLabel("Cedula:");
 		lblNewLabel_1.setBounds(35, 69, 61, 16);
 		contentPane.add(lblNewLabel_1);
 		
@@ -89,14 +90,6 @@ public class registrarPaciente extends JFrame {
 		lblNewLabel_4.setBounds(35, 197, 111, 16);
 		contentPane.add(lblNewLabel_4);
 		
-		JButton botonRegistrarVacunas = new JButton("Registrar vacuna");
-		botonRegistrarVacunas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		botonRegistrarVacunas.setBounds(475, 263, 165, 29);
-		contentPane.add(botonRegistrarVacunas);
-		
 		JComboBox comboBoxTipoSangre = new JComboBox();
 		comboBoxTipoSangre.addItem("AB+");
 		comboBoxTipoSangre.addItem("AB");
@@ -110,7 +103,7 @@ public class registrarPaciente extends JFrame {
 		contentPane.add(comboBoxTipoSangre);
 		
 		JDateChooser fechaNacimiento = new JDateChooser();
-		fechaNacimiento.setBounds(183, 154, 228, 26);
+		fechaNacimiento.setBounds(164, 154, 247, 26);
 		contentPane.add(fechaNacimiento);
 		
 		JButton botonCrearPaciente = new JButton("Crear Paciente");
@@ -154,7 +147,7 @@ public class registrarPaciente extends JFrame {
 				}		
 			}
 		});
-		botonCrearPaciente.setBounds(664, 263, 152, 29);
+		botonCrearPaciente.setBounds(692, 263, 124, 29);
 		contentPane.add(botonCrearPaciente);
 		
 		JButton botonRegresar = new JButton("Regresar");
@@ -179,7 +172,7 @@ public class registrarPaciente extends JFrame {
 		contentPane.add(campoTextoLugarResidencia);
 		campoTextoLugarResidencia.setColumns(10);
 		
-		JLabel lblNewLabel_7 = new JLabel("Teléfono:");
+		JLabel lblNewLabel_7 = new JLabel("Telefono:");
 		lblNewLabel_7.setBounds(513, 154, 61, 16);
 		contentPane.add(lblNewLabel_7);
 		
@@ -188,15 +181,7 @@ public class registrarPaciente extends JFrame {
 		contentPane.add(campoTextoTelefono);
 		campoTextoTelefono.setColumns(10);
 		
-		JLabel lblNewLabel_8 = new JLabel("Lista de vacunas aplicadas:");
-		lblNewLabel_8.setBounds(433, 197, 178, 16);
-		contentPane.add(lblNewLabel_8);
-		
-		JComboBox comboBoxVacunas = new JComboBox();
-		comboBoxVacunas.setBounds(608, 193, 208, 27);
-		contentPane.add(comboBoxVacunas);
-		
-		JButton btnRegistrarOtroTelefno = new JButton("Registrar otro telefóno");
+		JButton btnRegistrarOtroTelefno = new JButton("Registrar otro telefono");
 		btnRegistrarOtroTelefno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame();
@@ -230,6 +215,19 @@ public class registrarPaciente extends JFrame {
 		campoTextoOtroTelefono.setBounds(35, 327, 136, 26);
 		contentPane.add(campoTextoOtroTelefono);
 		campoTextoOtroTelefono.setColumns(10);
+		
+		JLabel lblNewLabel_9 = new JLabel("Contrasenna temporal:");
+		lblNewLabel_9.setBounds(458, 198, 117, 14);
+		contentPane.add(lblNewLabel_9);
+		
+		tempPassTextField = new JTextField();
+		tempPassTextField.setBounds(608, 195, 208, 20);
+		contentPane.add(tempPassTextField);
+		tempPassTextField.setColumns(10);
+		
+		JButton btnCrearCuenta = new JButton("Crear cuenta");
+		btnCrearCuenta.setBounds(577, 263, 98, 29);
+		contentPane.add(btnCrearCuenta);
 		
 		
 	}

@@ -5,17 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
-import logicanegocios.Cita;
+import javax.swing.JOptionPane;
 
+import logicanegocios.Usuario;
 
-public class daoCita {
-	
+public class daoLogin {
 	private Statement stmt;
 	ResultSet rs;
 	
-	public void insert(String query) {
+	public void createUser(String query) {
 		try
 		{
 			Connection conn = new Conexion().conexionBaseDatos();
@@ -25,25 +24,26 @@ public class daoCita {
 			
 		} catch(SQLException e) { 
 			e.printStackTrace(); 
-		}	
+		}
+		
 	}
 	
-	public List<Cita> getCitaResgritada(String query) {
-		List<Cita> citaRegistrada = new ArrayList<Cita>();
+	public Usuario loginUser(String query){
+		Usuario user = new Usuario();
+		
 		try {
 			Connection conn = new Conexion().conexionBaseDatos();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				Cita cita = new Cita(rs.getString("Fecha"));
-				citaRegistrada.add(cita);
+				user.setCedula(rs.getInt("Cedula"));
+				user.setContrasenna(rs.getString("contrasenna"));
+				user.setRol(rs.getString("rol"));
 			}
-			return citaRegistrada;
+			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return citaRegistrada;
+		return user;
 	}
-	
-
 }
