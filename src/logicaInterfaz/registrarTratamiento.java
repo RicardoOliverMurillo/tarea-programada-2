@@ -51,7 +51,7 @@ public class registrarTratamiento extends JFrame {
 		lblNewLabel.setBounds(133, 23, 146, 16);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Diagnóstico:");
+		JLabel lblNewLabel_1 = new JLabel("Diagnostico:");
 		lblNewLabel_1.setBounds(35, 69, 88, 16);
 		contentPane.add(lblNewLabel_1);
 		

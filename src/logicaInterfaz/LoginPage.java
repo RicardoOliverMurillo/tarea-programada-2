@@ -48,16 +48,20 @@ public class LoginPage extends JFrame {
 	public void renderPage(String rol) {
 		if(rol.equals("paciente")) {
 			dispose();
-			new homePagePacient().setVisible(true);
+			new menuPaciente().setVisible(true);
 		} else if (rol.equals("doctor")) {
 			dispose();
-			new homePageDoctor().setVisible(true);
+			new menuDoctor().setVisible(true);
 		} else if (rol.equals("secretaria")) {
 			dispose();
-			new homePageSecretary().setVisible(true);
+			new menuSecretario().setVisible(true);
 		} else if (rol.equals("enfermero")) {
 			dispose();
-			new homePageNurse().setVisible(true);
+			new menuEnfermero().setVisible(true);
+		} else if (rol.equals("administrador")) {
+			dispose();
+			new menuAdministrador().setVisible(true);
+			
 		}
 	}
 

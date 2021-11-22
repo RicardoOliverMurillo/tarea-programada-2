@@ -28,10 +28,10 @@ public class daoCita {
 		}	
 	}
 	
-	public List<Cita> getCitaResgritada(String query) throws SQLException {
+	public List<Cita> getCitaResgritada(String query) {
 		List<Cita> citaRegistrada = new ArrayList<Cita>();
-		Connection conn = new Conexion().conexionBaseDatos();
 		try {
+			Connection conn = new Conexion().conexionBaseDatos();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {

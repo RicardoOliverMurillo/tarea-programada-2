@@ -54,8 +54,8 @@ public class registrarCentroAtencion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Crear Centro de Atención");
-		lblNewLabel.setBounds(115, 17, 165, 16);
+		JLabel lblNewLabel = new JLabel("Crear Centro de Atencion");
+		lblNewLabel.setBounds(132, 11, 165, 16);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre:");
@@ -67,7 +67,7 @@ public class registrarCentroAtencion extends JFrame {
 		contentPane.add(campoTextoNombre);
 		campoTextoNombre.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Ubicación:");
+		JLabel lblNewLabel_2 = new JLabel("Ubicacion:");
 		lblNewLabel_2.setBounds(36, 94, 81, 16);
 		contentPane.add(lblNewLabel_2);
 		
@@ -76,7 +76,7 @@ public class registrarCentroAtencion extends JFrame {
 		contentPane.add(campoTextoUbicacion);
 		campoTextoUbicacion.setColumns(10);
 		
-		JLabel lblNewLabel_3 = new JLabel("Catidad máxima de pacientes:");
+		JLabel lblNewLabel_3 = new JLabel("Catidad maxima de pacientes:");
 		lblNewLabel_3.setBounds(36, 137, 198, 16);
 		contentPane.add(lblNewLabel_3);
 		
@@ -85,11 +85,11 @@ public class registrarCentroAtencion extends JFrame {
 		contentPane.add(campoTextoCantidadPacientes);
 		campoTextoCantidadPacientes.setColumns(10);
 		
-		JLabel lblNewLabel_4 = new JLabel("Tipo de centro de atención:");
+		JLabel lblNewLabel_4 = new JLabel("Tipo de centro de atencion:");
 		lblNewLabel_4.setBounds(36, 182, 172, 16);
 		contentPane.add(lblNewLabel_4);
 		
-		JButton botonCrearCentroAtencion = new JButton("Crear Centro de Atención");
+		JButton botonCrearCentroAtencion = new JButton("Crear Centro de Atencion");
 		botonCrearCentroAtencion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
