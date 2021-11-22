@@ -9,21 +9,28 @@ import javax.swing.border.EmptyBorder;
 
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+
+import logicanegocios.Funcionario;
+import logicanegocios.Paciente;
 
 public class registrarPaciente extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField campoTextoCedula;
 	private JTextField campoTextoNombre;
-	private JTextField campoTextoTipoSangre;
 	private JTextField campoTextoNacionalidad;
-	private JTextField campoTexto;
+	private JTextField campoTextoLugarResidencia;
 	private JTextField campoTextoTelefono;
+	private JTextField campoTextoOtroTelefono;
 
 	/**
 	 * Launch the application.
@@ -87,18 +94,67 @@ public class registrarPaciente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		botonRegistrarVacunas.setBounds(57, 263, 288, 29);
+		botonRegistrarVacunas.setBounds(475, 263, 165, 29);
 		contentPane.add(botonRegistrarVacunas);
+		
+		JComboBox comboBoxTipoSangre = new JComboBox();
+		comboBoxTipoSangre.addItem("AB+");
+		comboBoxTipoSangre.addItem("AB");
+		comboBoxTipoSangre.addItem("A+");
+		comboBoxTipoSangre.addItem("A-");
+		comboBoxTipoSangre.addItem("B+");
+		comboBoxTipoSangre.addItem("B-");
+		comboBoxTipoSangre.addItem("O+");
+		comboBoxTipoSangre.addItem("O-");
+		comboBoxTipoSangre.setBounds(164, 193, 165, 27);
+		contentPane.add(comboBoxTipoSangre);
+		
+		JDateChooser fechaNacimiento = new JDateChooser();
+		fechaNacimiento.setBounds(183, 154, 228, 26);
+		contentPane.add(fechaNacimiento);
 		
 		JButton botonCrearPaciente = new JButton("Crear Paciente");
 		botonCrearPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				/////VALIDAR CUANDO NO SE ENVIA UN CODIGO FUNCIONARIO SINO NO ABRE LA VENTANA
-				//new registrarExperienciaEnfermero().setVisible(true);
+				JFrame frame = new JFrame();
+				Paciente paciente; 
+				String cedula = campoTextoCedula.getText();
+				String nombre = campoTextoNombre.getText();
+				SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
+				String fecha = dFormat.format(fechaNacimiento.getDate());
+				String tipoSangre = comboBoxTipoSangre.getSelectedItem().toString();
+				String nacionalidad = campoTextoNacionalidad.getText();
+				String residencia = campoTextoLugarResidencia.getText();
+				String telefono = campoTextoTelefono.getText();
+				
+				if ((campoTextoCedula.getText().equals("")) || (campoTextoNombre.getText().equals("")) || (campoTextoNacionalidad.getText().equals("")) || (campoTextoLugarResidencia.getText().equals("")) || (campoTextoTelefono.getText().equals(""))) {
+					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
+				} else {
+					paciente = new Paciente(Integer.parseInt(cedula), nombre, fecha, tipoSangre, nacionalidad,residencia,Integer.parseInt(telefono));
+					try {
+						if (paciente.verificarPaciente()) {
+							JOptionPane.showMessageDialog(frame, "Cedula existente");
+							campoTextoTelefono.setText("");
+							campoTextoNombre.setText("");
+							campoTextoNacionalidad.setText("");
+							campoTextoLugarResidencia.setText("");
+						} else {
+							paciente.crearPaciente();
+							paciente.crearPacienteTelefono();
+							JOptionPane.showMessageDialog(frame, "Paciente registrado");
+							campoTextoTelefono.setText("");
+							campoTextoNombre.setText("");
+							campoTextoNacionalidad.setText("");
+							campoTextoLugarResidencia.setText("");
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}		
+				}		
 			}
 		});
-		botonCrearPaciente.setBounds(608, 263, 208, 29);
+		botonCrearPaciente.setBounds(664, 263, 152, 29);
 		contentPane.add(botonCrearPaciente);
 		
 		JButton botonRegresar = new JButton("Regresar");
@@ -109,11 +165,6 @@ public class registrarPaciente extends JFrame {
 		lblNewLabel_5.setBounds(513, 64, 98, 16);
 		contentPane.add(lblNewLabel_5);
 		
-		campoTextoTipoSangre = new JTextField();
-		campoTextoTipoSangre.setBounds(164, 192, 247, 26);
-		contentPane.add(campoTextoTipoSangre);
-		campoTextoTipoSangre.setColumns(10);
-		
 		campoTextoNacionalidad = new JTextField();
 		campoTextoNacionalidad.setBounds(608, 59, 208, 26);
 		contentPane.add(campoTextoNacionalidad);
@@ -123,10 +174,10 @@ public class registrarPaciente extends JFrame {
 		lblNewLabel_6.setBounds(475, 107, 136, 16);
 		contentPane.add(lblNewLabel_6);
 		
-		campoTexto = new JTextField();
-		campoTexto.setBounds(608, 102, 208, 26);
-		contentPane.add(campoTexto);
-		campoTexto.setColumns(10);
+		campoTextoLugarResidencia = new JTextField();
+		campoTextoLugarResidencia.setBounds(608, 102, 208, 26);
+		contentPane.add(campoTextoLugarResidencia);
+		campoTextoLugarResidencia.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("Teléfono:");
 		lblNewLabel_7.setBounds(513, 154, 61, 16);
@@ -144,5 +195,42 @@ public class registrarPaciente extends JFrame {
 		JComboBox comboBoxVacunas = new JComboBox();
 		comboBoxVacunas.setBounds(608, 193, 208, 27);
 		contentPane.add(comboBoxVacunas);
+		
+		JButton btnRegistrarOtroTelefno = new JButton("Registrar otro telefóno");
+		btnRegistrarOtroTelefno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame();
+				Paciente paciente; 
+				String cedula = campoTextoCedula.getText();
+				String telefono = campoTextoOtroTelefono.getText();
+				
+				if (campoTextoCedula.getText().equals("") || (campoTextoOtroTelefono.getText().equals(""))) {
+					JOptionPane.showMessageDialog(frame, "Complete los campos del formulario");
+				} else {
+					paciente = new Paciente(Integer.parseInt(cedula), Integer.parseInt(telefono));
+					try {
+						if (paciente.verificarNumero()) {
+							JOptionPane.showMessageDialog(frame, "Telefono existente en el usuario");
+						} else {
+							paciente.crearPacienteTelefono();
+							JOptionPane.showMessageDialog(frame, "Nueva telefono agregado");
+							campoTextoTelefono.setText("");
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}		
+				}	
+			}
+		});
+		btnRegistrarOtroTelefno.setBounds(183, 327, 209, 29);
+		contentPane.add(btnRegistrarOtroTelefno);
+		
+		campoTextoOtroTelefono = new JTextField();
+		campoTextoOtroTelefono.setBounds(35, 327, 136, 26);
+		contentPane.add(campoTextoOtroTelefono);
+		campoTextoOtroTelefono.setColumns(10);
+		
+		
 	}
 }
