@@ -9,16 +9,27 @@ import javax.swing.border.EmptyBorder;
 
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JMonthChooser;
+
+import logicanegocios.Cita;
+import logicanegocios.Paciente;
+
+import com.github.lgooddatepicker.components.TimePicker;
 
 public class registrarCita extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField campoTextoObservacion;
+	private JTextField campoTextoEspecialidad;
 
 	/**
 	 * Launch the application.
@@ -67,7 +78,37 @@ public class registrarCita extends JFrame {
 		lblNewLabel_4.setBounds(35, 197, 88, 16);
 		contentPane.add(lblNewLabel_4);
 		
+		TimePicker horaCita = new TimePicker();
+		horaCita.setBounds(164, 148, 177, 29);
+		contentPane.add(horaCita);
+		
+		JDateChooser fechaCita = new JDateChooser();
+		fechaCita.setBounds(164, 112, 159, 26);
+		contentPane.add(fechaCita);
+		
 		JButton botonRegistrarCita = new JButton("Registrar Cita");
+		botonRegistrarCita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame();
+				Cita cita;
+				String especialidad = campoTextoEspecialidad.getText();
+				SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
+				String fecha = dFormat.format(fechaCita.getDate());
+				String hora = horaCita.getText();
+				String observacion = campoTextoObservacion.getText();
+				
+				if ((campoTextoEspecialidad.getText().equals("")) || (campoTextoObservacion.getText().equals(""))) {
+					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
+				} else {
+					cita = new Cita("Registrada",especialidad, fecha, hora, observacion, 1);
+					cita.crearCita();
+					JOptionPane.showMessageDialog(frame, "Cita registrada");
+					campoTextoEspecialidad.setText("");
+					campoTextoObservacion.setText("");
+				}	
+		
+			}
+		});
 		botonRegistrarCita.setBounds(35, 301, 149, 29);
 		contentPane.add(botonRegistrarCita);
 		
@@ -80,8 +121,9 @@ public class registrarCita extends JFrame {
 		contentPane.add(campoTextoObservacion);
 		campoTextoObservacion.setColumns(10);
 		
-		JComboBox comboBoxEspecialidad = new JComboBox();
-		comboBoxEspecialidad.setBounds(164, 65, 159, 27);
-		contentPane.add(comboBoxEspecialidad);
+		campoTextoEspecialidad = new JTextField();
+		campoTextoEspecialidad.setBounds(164, 64, 177, 26);
+		contentPane.add(campoTextoEspecialidad);
+		campoTextoEspecialidad.setColumns(10);
 	}
 }
