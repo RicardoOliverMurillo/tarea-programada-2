@@ -10,7 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logicanegocios.Cita;
+import logicanegocios.*;
+import logicadao.*;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,24 +25,18 @@ public class realizarCita extends JFrame {
 
 	private JPanel contentPane;
 	Cita cita = new Cita();
+	daoLOGCitas LOG = new daoLOGCitas();
+	LOGCitas bitacora;
+	String fechaCita;
+	String EstadoMedico = "Realizadaporelmedico";
+	String idUsuarioReturned;
+	String idCita;
+	String idInSession;
+	String idInSessionCita;
 	private JTextField campoTextoCedula;
 	//List<Cita> citas = cita.getCitasRegistradas(1);
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					realizarCita frame = new realizarCita();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 	
 	
 	public List<String> getCitasRegistradas(int pcedula) throws SQLException {
@@ -58,7 +53,7 @@ public class realizarCita extends JFrame {
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
-	public realizarCita() throws SQLException {
+	public realizarCita(String usernameCedula) throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 430, 247);
 		contentPane = new JPanel();
@@ -85,27 +80,12 @@ public class realizarCita extends JFrame {
 		JButton botonRealizarCita = new JButton("Realizar cita");
 		botonRealizarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame frame = new JFrame();
-				int contador = 0;
-				String cedula = campoTextoCedula.getText();
-				if ((campoTextoCedula.getText().equals(""))) {
-					JOptionPane.showMessageDialog(frame, "Complete los campos del formulario");
-				}else {
-					cita.realizarCitaCentroMedico(comboBoxCitas.getSelectedItem().toString());
-					JOptionPane.showMessageDialog(frame, "Cita realizada por el centro medico");
-					comboBoxCitas.removeAllItems();
-					try {
-						while (getCitasRegistradas(Integer.parseInt(cedula)).size() > contador) {
-							comboBoxCitas.addItem(getCitasRegistradas(Integer.parseInt(cedula)).get(contador));
-							contador +=1;
-						}
-					} catch (SQLException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-				}
-				
-				
+				fechaCita = comboBoxCitas.getSelectedItem().toString().toString();
+				idCita = LOG.getIDcita(fechaCita);
+				idInSession = "'" + usernameCedula + "'";
+				idInSessionCita = "'" + idCita + "'";
+				bitacora = new LOGCitas (EstadoMedico, usernameCedula, idCita);
+				bitacora.logRealizarCitaDR();
 			}
 		});
 		botonRealizarCita.setBounds(167, 144, 117, 29);

@@ -23,23 +23,11 @@ public class menuDoctor extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					menuDoctor frame = new menuDoctor();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public menuDoctor() {
+	public menuDoctor(String usernameCedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 741, 452);
 		contentPane = new JPanel();
@@ -102,7 +90,7 @@ public class menuDoctor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new realizarCita().setVisible(true);
+					new realizarCita(usernameCedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -104,6 +104,8 @@ public class Cita {
 		action.insert(query);
 	}
 	
+	
+	
 	public List<Cita> getCitasRegistradas(int pcedula) {
 		String query = "SELECT * FROM Citas WHERE Estado = 'Registrada' AND CedulaPaciente ="+pcedula+";";
 		return action.getCitaResgritada(query);

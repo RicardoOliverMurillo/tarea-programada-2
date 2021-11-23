@@ -45,13 +45,14 @@ public class LoginPage extends JFrame {
 	}
 	
 	
+
 	public void renderPage(String rol) {
 		if(rol.equals("paciente")) {
 			dispose();
 			new menuPaciente().setVisible(true);
 		} else if (rol.equals("doctor")) {
 			dispose();
-			new menuDoctor().setVisible(true);
+			new menuDoctor(userTextField.getText()).setVisible(true);
 		} else if (rol.equals("secretaria")) {
 			dispose();
 			new menuSecretario().setVisible(true);

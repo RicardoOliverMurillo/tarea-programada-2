@@ -100,7 +100,7 @@ public class registrarCita extends JFrame {
 				if ((campoTextoEspecialidad.getText().equals("")) || (campoTextoObservacion.getText().equals(""))) {
 					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
 				} else {
-					cita = new Cita("Registrada",especialidad, fecha, hora, observacion, 1);
+					cita = new Cita("Registrada",especialidad, fecha, hora, observacion, 1144442);
 					cita.crearCita();
 					JOptionPane.showMessageDialog(frame, "Cita registrada");
 					campoTextoEspecialidad.setText("");

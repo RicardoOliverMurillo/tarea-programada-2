@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class daoAreasTrabajo {
+public class daoCatalogoDiagnostico {
 	
 	private Statement stmt;
 	ResultSet rs;
@@ -26,16 +26,16 @@ public class daoAreasTrabajo {
 		
 	}
 	
-	public boolean verificarAreasTrabajoX(String query) throws SQLException {
-		ArrayList<Integer> AreasHospital = new ArrayList<Integer>();
+	public boolean verificarCatalogoDiagnostico(String query) throws SQLException {
+		ArrayList<Integer> CatalogoDiagnostico = new ArrayList<Integer>();
 		Connection conn = new Conexion().conexionBaseDatos();
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				AreasHospital.add(rs.getInt("ID_AreaHospital"));
+				CatalogoDiagnostico.add(rs.getInt("ID_Diagnostico"));
 			}
-			if (AreasHospital.size() == 1) {
+			if (CatalogoDiagnostico.size() == 1) {
 				return true;			
 			}
 
@@ -44,5 +44,7 @@ public class daoAreasTrabajo {
 		}
 		return false;
 	}
+
+	
 
 }
