@@ -51,10 +51,10 @@ public class LoginPage extends JFrame {
 			new menuPaciente(pcedula).setVisible(true);
 		} else if (rol.equals("doctor")) {
 			dispose();
-			new menuDoctor().setVisible(true);
+			new menuDoctor(pcedula).setVisible(true);
 		} else if (rol.equals("secretaria")) {
 			dispose();
-			new menuSecretario().setVisible(true);
+			new menuSecretario(pcedula).setVisible(true);
 		} else if (rol.equals("enfermero")) {
 			dispose();
 			new menuEnfermero().setVisible(true);

@@ -23,7 +23,9 @@ import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JMonthChooser;
 
+import logicadao.daoLOGCitas;
 import logicanegocios.Cita;
+import logicanegocios.LOGCitas;
 import logicanegocios.Paciente;
 
 import com.github.lgooddatepicker.components.TimePicker;
@@ -33,6 +35,14 @@ public class registrarCita extends JFrame {
 	private JPanel contentPane;
 	private JTextField campoTextoObservacion;
 	private JTextField campoTextoEspecialidad;
+	daoLOGCitas LOG = new daoLOGCitas();
+	LOGCitas bitacora;
+	String fechaCita;
+	String EstadoMedico = "RegistradaPorElPaciente";
+	String idUsuarioReturned;
+	String idCita;
+	String idInSession;
+	String idInSessionCita;
 	Cita cita = new Cita();
 
 	/**
@@ -140,6 +150,10 @@ public class registrarCita extends JFrame {
 				} else {
 					cita = new Cita("Registrada",especialidad, fecha, hora, observacion, pcedula);
 					cita.crearCita();
+					fechaCita = comboBoxFecha.getSelectedItem().toString().toString();
+					idCita = LOG.getIDcita(fechaCita);
+					bitacora = new LOGCitas (EstadoMedico, String.valueOf(pcedula), idCita);
+					bitacora.logRealizarCitaDR();
 					cita.eliminarHorario();
 					JOptionPane.showMessageDialog(frame, "Cita registrada");
 					campoTextoEspecialidad.setText("");

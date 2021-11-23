@@ -35,11 +35,14 @@ public class menuSecretario extends JFrame {
 			}
 		});
 	}
-
+	public menuSecretario() {
+		
+	}
+	
 	/**
 	 * Create the frame.
 	 */
-	public menuSecretario() {
+	public menuSecretario(int pSecretaria) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 579, 357);
 		contentPane = new JPanel();
@@ -68,7 +71,7 @@ public class menuSecretario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new asignarCita().setVisible(true);
+					new asignarCita(pSecretaria).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -83,7 +86,7 @@ public class menuSecretario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new cancelarCitaCentroMedico().setVisible(true);
+					new cancelarCitaCentroMedico(pSecretaria).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
