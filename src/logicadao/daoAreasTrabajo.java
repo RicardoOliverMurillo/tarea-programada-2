@@ -26,16 +26,16 @@ public class daoAreasTrabajo {
 		
 	}
 	
-	public boolean verificarCentroAtencion(String query) throws SQLException {
-		ArrayList<Integer> centroAtencion = new ArrayList<Integer>();
+	public boolean verificarAreasTrabajoX(String query) throws SQLException {
+		ArrayList<Integer> AreasHospital = new ArrayList<Integer>();
 		Connection conn = new Conexion().conexionBaseDatos();
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				centroAtencion.add(rs.getInt("ID_AreaHospital"));
+				AreasHospital.add(rs.getInt("ID_AreaHospital"));
 			}
-			if (centroAtencion.size() == 1) {
+			if (AreasHospital.size() == 1) {
 				return true;			
 			}
 

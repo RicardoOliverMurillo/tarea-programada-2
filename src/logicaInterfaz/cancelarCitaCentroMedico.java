@@ -10,7 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logicanegocios.Cita;
+import logicadao.daoLOGCitas;
+import logicanegocios.*;
+import logicanegocios.*;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,7 +26,15 @@ public class cancelarCitaCentroMedico extends JFrame {
 
 	private JPanel contentPane;
 	Cita cita = new Cita();
+	daoLOGCitas LOG = new daoLOGCitas();
 	private JTextField campoTextoCedula;
+	LOGCitas bitacora;
+	String fechaCita;
+	String EstadoMedico = "CanceladaPorCentroMedico";
+	String idUsuarioReturned;
+	String idCita;
+	String idInSession;
+	String idInSessionCita;
 	//List<Cita> citas = cita.getCitasRegistradas(1);
 
 	/**
@@ -53,12 +63,15 @@ public class cancelarCitaCentroMedico extends JFrame {
 		return registrosCitas;
 	}
 	
-
+	public cancelarCitaCentroMedico() {
+		
+	}
+	
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
-	public cancelarCitaCentroMedico() throws SQLException {
+	public cancelarCitaCentroMedico(int pCedula) throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 430, 247);
 		contentPane = new JPanel();
@@ -95,6 +108,10 @@ public class cancelarCitaCentroMedico extends JFrame {
 				int contador = 0;
 				String cedula = campoTextoCedula.getText();
 				cita.cancelarCitaCentroMedico(comboBoxCitas.getSelectedItem().toString());
+				fechaCita = comboBoxCitas.getSelectedItem().toString().toString();
+				idCita = LOG.getIDcita(fechaCita);
+				bitacora = new LOGCitas (EstadoMedico, String.valueOf(pCedula), idCita);
+				bitacora.logRealizarCitaDR();
 				JOptionPane.showMessageDialog(frame, "Cita cancelada por el centro medico");
 				comboBoxCitas.removeAllItems();
 				try {

@@ -35,11 +35,14 @@ public class menuEnfermero extends JFrame {
 			}
 		});
 	}
-
+	
+	public menuEnfermero() {
+		
+	}
 	/**
 	 * Create the frame.
 	 */
-	public menuEnfermero() {
+	public menuEnfermero(int pCedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 543, 340);
 		contentPane = new JPanel();
@@ -68,7 +71,7 @@ public class menuEnfermero extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new asignarCita().setVisible(true);
+					new asignarCita(pCedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -83,7 +86,7 @@ public class menuEnfermero extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new cancelarCitaCentroMedico().setVisible(true);
+					new cancelarCitaCentroMedico(pCedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -10,7 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logicanegocios.Cita;
+import logicanegocios.*;
+import logicadao.*;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,14 @@ public class realizarCita extends JFrame {
 
 	private JPanel contentPane;
 	Cita cita = new Cita();
+	daoLOGCitas LOG = new daoLOGCitas();
+	LOGCitas bitacora;
+	String fechaCita;
+	String EstadoMedico = "RealizadaPorElMedico";
+	String idUsuarioReturned;
+	String idCita;
+	String idInSession;
+	String idInSessionCita;
 	private JTextField campoTextoCedula;
 	//List<Cita> citas = cita.getCitasRegistradas(1);
 
@@ -58,7 +67,12 @@ public class realizarCita extends JFrame {
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
-	public realizarCita() throws SQLException {
+	
+	public realizarCita() {
+		
+	}
+	
+	public realizarCita(int pcedula) throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 430, 247);
 		contentPane = new JPanel();
@@ -97,6 +111,10 @@ public class realizarCita extends JFrame {
 				if ((campoTextoCedula.getText().equals(""))) {
 					JOptionPane.showMessageDialog(frame, "Complete los campos del formulario");
 				}else {
+					fechaCita = comboBoxCitas.getSelectedItem().toString().toString();
+					idCita = LOG.getIDcita(fechaCita);
+					bitacora = new LOGCitas (EstadoMedico, String.valueOf(pcedula), idCita);
+					bitacora.logRealizarCitaDR();
 					cita.realizarCitaCentroMedico(comboBoxCitas.getSelectedItem().toString());
 					JOptionPane.showMessageDialog(frame, "Cita realizada por el centro medico");
 					comboBoxCitas.removeAllItems();

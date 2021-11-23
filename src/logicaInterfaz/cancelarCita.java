@@ -13,7 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logicadao.daoLOGCitas;
 import logicanegocios.Cita;
+import logicanegocios.LOGCitas;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,6 +28,14 @@ import java.awt.event.ActionEvent;
 public class cancelarCita extends JFrame {
 
 	private JPanel contentPane;
+	daoLOGCitas LOG = new daoLOGCitas();
+	LOGCitas bitacora;
+	String fechaCita;
+	String EstadoMedico = "CanceladaPorElPaciente";
+	String idUsuarioReturned;
+	String idCita;
+	String idInSession;
+	String idInSessionCita;
 	Cita cita = new Cita();
 	//List<Cita> citas = cita.getCitasRegistradas(1);
 
@@ -105,6 +115,10 @@ public class cancelarCita extends JFrame {
 						
 					}else if (fechaCancelarCita.compareTo(fechaActual) < 0){
 						cita.cancelarCitaPaciente(fechaCita);
+						fechaCita = comboBoxCitas.getSelectedItem().toString().toString();
+						idCita = LOG.getIDcita(fechaCita);
+						bitacora = new LOGCitas (EstadoMedico, String.valueOf(pcedula), idCita);
+						bitacora.logRealizarCitaDR();
 						JOptionPane.showMessageDialog(frame, "Cita cancelada por el paciente");
 						comboBoxCitas.removeAllItems();
 						try {

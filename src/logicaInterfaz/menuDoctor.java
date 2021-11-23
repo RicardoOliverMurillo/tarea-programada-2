@@ -35,11 +35,14 @@ public class menuDoctor extends JFrame {
 			}
 		});
 	}
-
+	public menuDoctor() {
+		
+	}
+	
 	/**
 	 * Create the frame.
 	 */
-	public menuDoctor() {
+	public menuDoctor(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 741, 452);
 		contentPane = new JPanel();
@@ -68,7 +71,7 @@ public class menuDoctor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new asignarCita().setVisible(true);
+					new asignarCita(pcedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -83,7 +86,7 @@ public class menuDoctor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					new cancelarCitaCentroMedico().setVisible(true);
+					new cancelarCitaCentroMedico(pcedula).setVisible(true);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -102,7 +105,7 @@ public class menuDoctor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new realizarCita().setVisible(true);
+					new realizarCita(pcedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
