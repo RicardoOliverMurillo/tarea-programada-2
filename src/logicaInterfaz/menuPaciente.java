@@ -35,11 +35,13 @@ public class menuPaciente extends JFrame {
 			}
 		});
 	}
+	
+	public menuPaciente() {};
 
 	/**
 	 * Create the frame.
 	 */
-	public menuPaciente() {
+	public menuPaciente(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 634, 412);
 		contentPane = new JPanel();
@@ -67,7 +69,7 @@ public class menuPaciente extends JFrame {
 		botonSolicitarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new registrarCita().setVisible(true);
+				new registrarCita(pcedula).setVisible(true);
 			}
 		});
 		botonSolicitarCita.setBounds(237, 74, 117, 29);
@@ -78,7 +80,7 @@ public class menuPaciente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new cancelarCita().setVisible(true);
+					new cancelarCita(pcedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

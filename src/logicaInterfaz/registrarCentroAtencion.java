@@ -133,6 +133,12 @@ public class registrarCentroAtencion extends JFrame {
 		contentPane.add(botonCrearCentroAtencion);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuAdministrador().setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(256, 225, 117, 29);
 		contentPane.add(botonRegresar);
 		

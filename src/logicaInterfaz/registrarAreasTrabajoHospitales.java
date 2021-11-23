@@ -52,7 +52,7 @@ public class registrarAreasTrabajoHospitales extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Registrar \u00C1reas de Trabajo");
-		lblNewLabel.setBounds(133, 23, 146, 16);
+		lblNewLabel.setBounds(91, 23, 188, 16);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre: ");
@@ -79,12 +79,12 @@ public class registrarAreasTrabajoHospitales extends JFrame {
 				} else {
 					try {
 						if (AreasTrabajo.verificarAreasTrabajo(nombre)) {
-							JOptionPane.showMessageDialog(frame, "ERROR: Ya existe un área de trabajo con ese nombre.");
+							JOptionPane.showMessageDialog(frame, "ERROR: Ya existe un area de trabajo con ese nombre.");
 							textField.setText("");
 							
 						} else {
 							AreasTrabajo.crearAreasTrabajo();
-							JOptionPane.showMessageDialog(frame, "Área de Trabajo Registrada");
+							JOptionPane.showMessageDialog(frame, "Area de Trabajo Registrada");
 							textField.setText("");
 						}
 					} catch (SQLException e1) {

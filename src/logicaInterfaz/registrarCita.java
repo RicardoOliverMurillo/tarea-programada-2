@@ -12,10 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JMonthChooser;
@@ -30,6 +33,7 @@ public class registrarCita extends JFrame {
 	private JPanel contentPane;
 	private JTextField campoTextoObservacion;
 	private JTextField campoTextoEspecialidad;
+	Cita cita = new Cita();
 
 	/**
 	 * Launch the application.
@@ -46,11 +50,31 @@ public class registrarCita extends JFrame {
 			}
 		});
 	}
+	
+	public registrarCita() {};
+	
+	public List<String> getCitasHorario() {
+		List<Cita> citas = cita.getCitasHorarios();
+		List<String> registrosCitas = new ArrayList();
+		for (int i = 0; i<citas.size(); i++) {
+			registrosCitas.add(citas.get(i).getFecha());
+		}
+		return registrosCitas;
+	}
+	
+	public List<String> getHorasHorario(String pfecha) {
+		List<Cita> citas = cita.getCitasHoras(pfecha);
+		List<String> horasCitas = new ArrayList();
+		for (int i = 0; i<citas.size(); i++) {
+			horasCitas.add(citas.get(i).getFecha());
+		}
+		return horasCitas;
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public registrarCita() {
+	public registrarCita(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 437);
 		contentPane = new JPanel();
@@ -78,35 +102,50 @@ public class registrarCita extends JFrame {
 		lblNewLabel_4.setBounds(35, 197, 88, 16);
 		contentPane.add(lblNewLabel_4);
 		
-		TimePicker horaCita = new TimePicker();
-		horaCita.setBounds(164, 148, 177, 29);
-		contentPane.add(horaCita);
+		JComboBox comboBoxHora = new JComboBox();
+		comboBoxHora.setBounds(162, 150, 179, 27);
+		contentPane.add(comboBoxHora);
 		
-		JDateChooser fechaCita = new JDateChooser();
-		fechaCita.setBounds(164, 112, 159, 26);
-		contentPane.add(fechaCita);
+		JComboBox comboBoxFecha = new JComboBox(getCitasHorario().toArray());
+		comboBoxFecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List <String> horasCitas = null;
+				int cantidad = 0;
+				
+				comboBoxHora.removeAllItems();
+				horasCitas = getHorasHorario(comboBoxFecha.getSelectedItem().toString());
+				while (horasCitas.size() != cantidad) {
+					comboBoxHora.addItem(horasCitas.get(cantidad));
+					cantidad +=1;
+				}
+			}
+		});
+		comboBoxFecha.setBounds(162, 103, 179, 27);
+		contentPane.add(comboBoxFecha);
+
 		
 		JButton botonRegistrarCita = new JButton("Registrar Cita");
 		botonRegistrarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame();
 				Cita cita;
+				int contador = 0;
 				String especialidad = campoTextoEspecialidad.getText();
-				SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
-				String fecha = dFormat.format(fechaCita.getDate());
-				String hora = horaCita.getText();
 				String observacion = campoTextoObservacion.getText();
+				String fecha = comboBoxFecha.getSelectedItem().toString();
+				String hora = comboBoxHora.getSelectedItem().toString();
 				
 				if ((campoTextoEspecialidad.getText().equals("")) || (campoTextoObservacion.getText().equals(""))) {
 					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
 				} else {
-					cita = new Cita("Registrada",especialidad, fecha, hora, observacion, 1);
+					cita = new Cita("Registrada",especialidad, fecha, hora, observacion, pcedula);
 					cita.crearCita();
+					cita.eliminarHorario();
 					JOptionPane.showMessageDialog(frame, "Cita registrada");
 					campoTextoEspecialidad.setText("");
 					campoTextoObservacion.setText("");
+					comboBoxFecha.setModel(new DefaultComboBoxModel(getCitasHorario().toArray()));
 				}	
-		
 			}
 		});
 		botonRegistrarCita.setBounds(35, 301, 149, 29);

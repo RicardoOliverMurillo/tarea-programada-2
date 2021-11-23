@@ -37,6 +37,10 @@ public class Cita {
 		this.fecha = pfecha;
 	}
 	
+	public Cita(String pfecha, String phora) {
+		this.fecha = pfecha;
+		this.hora = phora;
+	}
 	
 	public String getEstado() {
 		return estado;
@@ -104,8 +108,33 @@ public class Cita {
 		action.insert(query);
 	}
 	
+	public void crearHorario() {		
+		String query = "INSERT INTO Horario ([Fecha],[Hora]) VALUES ('"+getFecha()+"','"+getHora()+"');";
+		action.insert(query);
+	}
+	
+	public void eliminarHorario() {		
+		String query = "DELETE FROM Horario WHERE Fecha = '"+getFecha()+"' AND Hora = '"+getHora()+"';";
+		action.insert(query);
+	}
+	
+	public boolean verificarHorario() throws SQLException {		
+		String query = "SELECT * FROM Horario WHERE Fecha = '"+getFecha()+"' AND Hora = '"+getHora()+"';";
+		return action.verificarFechaHora(query);
+	}
+	
+	public List<Cita> getCitasHorarios() {
+		String query = "SELECT * FROM Horario";
+		return action.getCitaResgritada(query);
+	}
+	
+	public List<Cita> getCitasHoras(String pfecha) {
+		String query = "SELECT * FROM Horario WHERE Fecha = '"+pfecha+"';";
+		return action.getHoraCita(query);
+	}
+	
 	public List<Cita> getCitasRegistradas(int pcedula) {
-		String query = "SELECT * FROM Citas WHERE Estado = 'Registrada' AND CedulaPaciente ="+pcedula+";";
+		String query = "SELECT * FROM Citas WHERE Estado = 'Registrada' OR Estado = 'Asignada' AND CedulaPaciente ="+pcedula+";";
 		return action.getCitaResgritada(query);
 	}
 	

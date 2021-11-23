@@ -45,10 +45,10 @@ public class LoginPage extends JFrame {
 	}
 	
 	
-	public void renderPage(String rol) {
+	public void renderPage(String rol, int pcedula) {
 		if(rol.equals("paciente")) {
 			dispose();
-			new menuPaciente().setVisible(true);
+			new menuPaciente(pcedula).setVisible(true);
 		} else if (rol.equals("doctor")) {
 			dispose();
 			new menuDoctor().setVisible(true);
@@ -119,8 +119,9 @@ public class LoginPage extends JFrame {
 				tempUser.setCedula(Integer.parseInt(userTextField.getText()));
 				if(passwordField.getPassword() == null) {
 					passwordField.setText("");
+				}else {
+					tempUser.setContrasenna(String.valueOf(passwordField.getPassword()));
 				}
-				tempUser.setContrasenna(String.valueOf(passwordField.getPassword()));
 				
 				userSession = tempUser.login(tempUser);
 				
@@ -128,10 +129,10 @@ public class LoginPage extends JFrame {
 					JOptionPane.showMessageDialog(null, "Usuario no registrado");
 				} 
 				
-				if(userSession.getContrasenna().equals(String.valueOf(passwordField.getPassword()))) {					
-					renderPage(userSession.getRol());
+				if(userSession.getContrasenna().equals(String.valueOf(passwordField.getPassword()))) {
+					renderPage(userSession.getRol(),userSession.getCedula());
 				} else {
-					 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+					 JOptionPane.showMessageDialog(null, "Usuario o contrasena incorrectos");
 				}
 				
 				
