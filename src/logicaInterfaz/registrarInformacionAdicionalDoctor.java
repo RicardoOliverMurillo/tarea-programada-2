@@ -6,17 +6,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logicanegocios.Funcionario;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class registrarInformacionAdicionalDoctor extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField campoTextoCodigo;
+	private JTextField campoTextoEspecialidad;
 
 	/**
 	 * Launch the application.
@@ -33,11 +39,13 @@ public class registrarInformacionAdicionalDoctor extends JFrame {
 			}
 		});
 	}
+	
+	public registrarInformacionAdicionalDoctor() {};
 
 	/**
 	 * Create the frame.
 	 */
-	public registrarInformacionAdicionalDoctor() {
+	public registrarInformacionAdicionalDoctor(int pcedula, String pnombre, String ptipo, String pfecha) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 431, 238);
 		contentPane = new JPanel();
@@ -64,11 +72,31 @@ public class registrarInformacionAdicionalDoctor extends JFrame {
 		contentPane.add(botonRegresar);
 		
 		JButton botonRegistrarEspecialidad = new JButton("Registrar doctor");
+		botonRegistrarEspecialidad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame();
+				Funcionario funcionario;
+				String codigoDoctor = campoTextoCodigo.getText();
+				String especialidad = campoTextoEspecialidad.getText();
+				funcionario = new Funcionario(pcedula, pnombre, ptipo, pfecha, Integer.parseInt(codigoDoctor),especialidad);
+				try {
+					if(funcionario.verificarCodigoDoctor(Integer.parseInt(codigoDoctor))) {
+						JOptionPane.showMessageDialog(frame, "Codigo de doctor existente");
+					}else {
+						funcionario.crearDoctor();
+						JOptionPane.showMessageDialog(frame, "Doctor registrado");
+					}
+				} catch (NumberFormatException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		botonRegistrarEspecialidad.setBounds(26, 175, 160, 29);
 		contentPane.add(botonRegistrarEspecialidad);
 		
 		JComboBox comboBoxEspecialidad = new JComboBox();
-		comboBoxEspecialidad.setBounds(232, 123, 136, 27);
+		comboBoxEspecialidad.setBounds(232, 99, 136, 27);
 		contentPane.add(comboBoxEspecialidad);
 		
 		JLabel lblNewLabel_1 = new JLabel("Código:");
@@ -79,5 +107,10 @@ public class registrarInformacionAdicionalDoctor extends JFrame {
 		campoTextoCodigo.setBounds(238, 61, 130, 26);
 		contentPane.add(campoTextoCodigo);
 		campoTextoCodigo.setColumns(10);
+		
+		campoTextoEspecialidad = new JTextField();
+		campoTextoEspecialidad.setBounds(224, 122, 170, 26);
+		contentPane.add(campoTextoEspecialidad);
+		campoTextoEspecialidad.setColumns(10);
 	}
 }

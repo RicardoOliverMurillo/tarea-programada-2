@@ -151,6 +151,12 @@ public class registrarPaciente extends JFrame {
 		contentPane.add(botonCrearPaciente);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuAdministrador().setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(699, 338, 117, 29);
 		contentPane.add(botonRegresar);
 		

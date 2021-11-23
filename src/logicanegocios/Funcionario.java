@@ -35,6 +35,7 @@ public class Funcionario {
 		this.area = parea;
 	}
 	
+	//Enfermero
 	public Funcionario(int pcedula, String pnombre, String ptipo, String pfechaIngreso, int pexperienciaCargo, int pexperienciaCapacitacion) {
 		this.cedula = pcedula;
 		this.nombre = pnombre;
@@ -43,6 +44,16 @@ public class Funcionario {
 		//this.area = parea;
 		this.experienciaCargo = pexperienciaCargo;
 		this.experienciaCapacitacion = pexperienciaCapacitacion;
+	}
+	
+	//Doctor
+	public Funcionario(int pcedula, String pnombre, String ptipo, String pfechaIngreso, int pcodigoDoctor, String pespecialidad) {
+		this.cedula = pcedula;
+		this.nombre = pnombre;
+		this.tipo = ptipo;
+		this.fechaIngreso = pfechaIngreso;
+		this.codigoDoctor = pcodigoDoctor;
+		this.especialidad = pespecialidad;
 	}
 	
 	public Funcionario(int pcedula, String pnombre, String ptipo, String pfechaIngreso, int parea, int pcodigoDoctor, String pespecialidad) {
@@ -139,10 +150,22 @@ public class Funcionario {
 		return action.verificarFuncionario(query);
 	}
 	
+	public boolean verificarCodigoDoctor(int pcodigo) throws SQLException  {
+		String query = "SELECT * FROM Funcionario WHERE DR_CodigoMedico = " +pcodigo+";";
+		return action.verificarDoctor(query);
+	}
+	
 	//////////                     Metodo sin el atributo de area de trabajo                   //////////////////////////////////////
 	public void crearEnfermero() {
 		String query = "INSERT INTO Funcionario([Cedula],[Nombre],[Tipo],[Fecha_Ingreso],[Enfermero_PersonasACargo],[Enfermero_ExperienciaCapacitaciones]) VALUES('"
 				+ getCedula() + "','" + getNombre() + "','" + getTipo() + "','" + getFechaIngreso() + "',"+ getExperienciaCargo()+","+getExperienciaCapacitacion()+");";
+		action.insert(query);
+	}
+	
+	//////////                     Metodo sin el atributo de area de trabajo                   //////////////////////////////////////
+	public void crearDoctor() {
+		String query = "INSERT INTO Funcionario([Cedula],[Nombre],[Tipo],[Fecha_Ingreso],[DR_CodigoMedico],[DR_Especialidades]) VALUES('"
+				+ getCedula() + "','" + getNombre() + "','" + getTipo() + "','" + getFechaIngreso() + "',"+ getCodigoDoctor()+",'"+getEspecialidad()+"');";
 		action.insert(query);
 	}
 

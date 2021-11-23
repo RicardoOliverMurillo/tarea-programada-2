@@ -53,7 +53,7 @@ public class menuAdministrador extends JFrame {
 		lblNewLabel.setBounds(224, 11, 140, 16);
 		contentPane.add(lblNewLabel);
 		
-		JButton botonRegresar = new JButton("Cerrar sesión");
+		JButton botonRegresar = new JButton("Cerrar sesion");
 		botonRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -77,7 +77,7 @@ public class menuAdministrador extends JFrame {
 		registrarHorariosBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				//new registrarCita().setVisible(true);
+				new registrarHorarios().setVisible(true);
 			}
 		});
 		registrarHorariosBtn.setBounds(204, 116, 186, 23);

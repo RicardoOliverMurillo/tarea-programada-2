@@ -75,6 +75,12 @@ public class realizarCita extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuDoctor().setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(296, 144, 117, 29);
 		contentPane.add(botonRegresar);
 		

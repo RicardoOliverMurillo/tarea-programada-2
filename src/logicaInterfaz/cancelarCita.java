@@ -45,8 +45,10 @@ public class cancelarCita extends JFrame {
 		});
 	}
 	
-	public List<String> getCitasRegistradas() throws SQLException {
-		List<Cita> citas = cita.getCitasRegistradas(1);
+	public cancelarCita() {};
+	
+	public List<String> getCitasRegistradas(int cedula) throws SQLException {
+		List<Cita> citas = cita.getCitasRegistradas(cedula);
 		List<String> registrosCitas = new ArrayList();
 		for (int i = 0; i<citas.size(); i++) {
 			registrosCitas.add(citas.get(i).getFecha());
@@ -59,7 +61,8 @@ public class cancelarCita extends JFrame {
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
-	public cancelarCita() throws SQLException {
+	public cancelarCita(int pcedula) throws SQLException {
+		System.out.println(pcedula);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 339, 232);
 		contentPane = new JPanel();
@@ -79,7 +82,7 @@ public class cancelarCita extends JFrame {
 		botonRegresar.setBounds(182, 114, 117, 29);
 		contentPane.add(botonRegresar);
 		
-		JComboBox comboBoxCitas = new JComboBox(getCitasRegistradas().toArray());
+		JComboBox comboBoxCitas = new JComboBox(getCitasRegistradas(pcedula).toArray());
 		comboBoxCitas.setBounds(172, 65, 135, 27);
 		contentPane.add(comboBoxCitas);
 		
@@ -105,8 +108,8 @@ public class cancelarCita extends JFrame {
 						JOptionPane.showMessageDialog(frame, "Cita cancelada por el paciente");
 						comboBoxCitas.removeAllItems();
 						try {
-							while (getCitasRegistradas().size() > contador) {
-								comboBoxCitas.addItem(getCitasRegistradas().get(contador));
+							while (getCitasRegistradas(pcedula).size() > contador) {
+								comboBoxCitas.addItem(getCitasRegistradas(pcedula).get(contador));
 								contador +=1;
 							}
 						} catch (SQLException e2) {
@@ -114,7 +117,7 @@ public class cancelarCita extends JFrame {
 							e2.printStackTrace();
 						}
 						
-					}else if (fechaCancelarCita.compareTo(fechaActual) > 0) {
+					}else if (fechaCancelarCita.compareTo(fechaActual) == 0) {
 						JOptionPane.showMessageDialog(frame, "La cita a cancelar ocurre en el mismo dia");
 					}
 					
@@ -123,22 +126,19 @@ public class cancelarCita extends JFrame {
 					e1.printStackTrace();
 				}
 				
-				
-				
-				
 
-				cita.cancelarCitaPaciente(fechaCita);
-				JOptionPane.showMessageDialog(frame, "Cita cancelada por el paciente");
-				comboBoxCitas.removeAllItems();
-				try {
-					while (getCitasRegistradas().size() > contador) {
-						comboBoxCitas.addItem(getCitasRegistradas().get(contador));
-						contador +=1;
-					}
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
+//				cita.cancelarCitaPaciente(fechaCita);
+//				JOptionPane.showMessageDialog(frame, "Cita cancelada por el paciente");
+//				comboBoxCitas.removeAllItems();
+//				try {
+//					while (getCitasRegistradas().size() > contador) {
+//						comboBoxCitas.addItem(getCitasRegistradas().get(contador));
+//						contador +=1;
+//					}
+//				} catch (SQLException e2) {
+//					// TODO Auto-generated catch block
+//					e2.printStackTrace();
+//				}
 			}
 		});
 		botonCancelarCita.setBounds(19, 114, 117, 29);

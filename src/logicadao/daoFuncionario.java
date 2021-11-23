@@ -42,5 +42,24 @@ public class daoFuncionario {
 		}
 		return false;
 	}
+	
+	public boolean verificarDoctor(String query) throws SQLException {
+		ArrayList<Integer> centroAtencion = new ArrayList<Integer>();
+		Connection conn = new Conexion().conexionBaseDatos();
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				centroAtencion.add(rs.getInt("DR_CodigoMedico"));
+			}
+			if (centroAtencion.size() >= 1) {
+				return true;			
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }

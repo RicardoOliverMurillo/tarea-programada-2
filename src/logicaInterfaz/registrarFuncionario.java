@@ -135,9 +135,6 @@ public class registrarFuncionario extends JFrame {
 						
 					}
 					
-					
-					
-					
 					else if(comboBoxTipoFuncionario.getSelectedItem().toString().equals("Doctor")) {
 						try {
 							if (funcionario.verificarFuncionario(Integer.parseInt(cedula))) {
@@ -146,15 +143,13 @@ public class registrarFuncionario extends JFrame {
 								campoTextoNombre.setText("");
 							} else {
 								dispose();
-								new registrarInformacionAdicionalDoctor().setVisible(true);
+								new registrarInformacionAdicionalDoctor(Integer.parseInt(cedula),nombre,tipo,fecha).setVisible(true);
 							}
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 
-						
-						
 						
 					}else if(comboBoxTipoFuncionario.getSelectedItem().toString().equals("Secretario")) {
 						
@@ -170,7 +165,7 @@ public class registrarFuncionario extends JFrame {
 									campoTextoNombre.setText("");
 								} else {
 									funcionario.crearSecretario();
-									JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+									JOptionPane.showMessageDialog(frame, "Secretario registrado");
 									campoTextoCedula.setText("");
 									campoTextoNombre.setText("");
 								}
@@ -192,6 +187,12 @@ public class registrarFuncionario extends JFrame {
 		contentPane.add(botonCrearFuncionario);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuAdministrador().setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(729, 398, 117, 29);
 		contentPane.add(botonRegresar);
 		

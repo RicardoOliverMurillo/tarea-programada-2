@@ -93,25 +93,25 @@ public class registrarExperienciaEnfermero extends JFrame {
 				if (comboBoxCargo.getSelectedItem().toString().equals("Si") && comboBoxCapacitaciones.getSelectedItem().toString().equals("Si")){
 					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 1,1);
 					funcionario.crearEnfermero();
-					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();
 					new registrarFuncionario().setVisible(true);
 				}else if (comboBoxCargo.getSelectedItem().toString().equals("Si") && comboBoxCapacitaciones.getSelectedItem().toString().equals("No")) {
 					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 1,0);
 					funcionario.crearEnfermero();
-					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();
 					new registrarFuncionario().setVisible(true);
 				}else if (comboBoxCargo.getSelectedItem().toString().equals("No") && comboBoxCapacitaciones.getSelectedItem().toString().equals("No")) {
 					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 0,0);
 					funcionario.crearEnfermero();
-					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();
 					new registrarFuncionario().setVisible(true);
 				}else if (comboBoxCargo.getSelectedItem().toString().equals("No") && comboBoxCapacitaciones.getSelectedItem().toString().equals("Si")) {
 					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 0,1);
 					funcionario.crearEnfermero();
-					JOptionPane.showMessageDialog(frame, "Funcionario registrado");
+					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();
 					new registrarFuncionario().setVisible(true);
 				}
