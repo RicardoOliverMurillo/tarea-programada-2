@@ -117,7 +117,7 @@ public class realizarCita extends JFrame {
 					bitacora.logRealizarCitaDR();
 					cita.realizarCitaCentroMedico(comboBoxCitas.getSelectedItem().toString());
 					dispose();
-					new registrarDiagnostico(idCita).setVisible(true);
+					new registrarDiagnostico(idCita,String.valueOf(pcedula),cedula).setVisible(true);
 					comboBoxCitas.removeAllItems();
 					try {
 						while (getCitasRegistradas(Integer.parseInt(cedula)).size() > contador) {

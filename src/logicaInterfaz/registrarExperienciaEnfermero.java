@@ -42,7 +42,7 @@ public class registrarExperienciaEnfermero extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public registrarExperienciaEnfermero(int pcedula, String pnombre, String ptipo, String pfechaIngreso) {
+	public registrarExperienciaEnfermero(int pcedula, String pnombre, String ptipo, String pfechaIngreso, String area) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 431, 259);
 		contentPane = new JPanel();
@@ -91,25 +91,25 @@ public class registrarExperienciaEnfermero extends JFrame {
 				JFrame frame = new JFrame();
 				Funcionario funcionario;
 				if (comboBoxCargo.getSelectedItem().toString().equals("Si") && comboBoxCapacitaciones.getSelectedItem().toString().equals("Si")){
-					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 1,1);
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso,area, 1,1);
 					funcionario.crearEnfermero();
 					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();
 					new registrarFuncionario().setVisible(true);
 				}else if (comboBoxCargo.getSelectedItem().toString().equals("Si") && comboBoxCapacitaciones.getSelectedItem().toString().equals("No")) {
-					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 1,0);
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, area, 1,0);
 					funcionario.crearEnfermero();
 					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();
 					new registrarFuncionario().setVisible(true);
 				}else if (comboBoxCargo.getSelectedItem().toString().equals("No") && comboBoxCapacitaciones.getSelectedItem().toString().equals("No")) {
-					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 0,0);
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, area, 0,0);
 					funcionario.crearEnfermero();
 					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();
 					new registrarFuncionario().setVisible(true);
 				}else if (comboBoxCargo.getSelectedItem().toString().equals("No") && comboBoxCapacitaciones.getSelectedItem().toString().equals("Si")) {
-					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, 0,1);
+					funcionario = new Funcionario(pcedula, pnombre, ptipo, pfechaIngreso, area, 0,1);
 					funcionario.crearEnfermero();
 					JOptionPane.showMessageDialog(frame, "Enfermero registrado");
 					dispose();

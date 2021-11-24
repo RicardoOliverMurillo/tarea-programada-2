@@ -54,7 +54,7 @@ public class registrarTratamiento extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public registrarTratamiento(String pIdCita, String pIdDiagnostico) {
+	public registrarTratamiento(String pIdCita, String pIdDiagnostico,String pCedula, String cedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 437);
 		contentPane = new JPanel();
@@ -151,8 +151,9 @@ public class registrarTratamiento extends JFrame {
 					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
 				} else {
 					RegistrarTratamiento.crearRegistrarDiagnostico();
-					JOptionPane.showMessageDialog(frame, "Tratamiento Registrado");
 					campoTextoObservacion.setText("");
+					dispose();
+					new registrarHospitalizacion(String.valueOf(pCedula),String.valueOf(pIdCita),cedula).setVisible(true);
 					
 				}
 			}
