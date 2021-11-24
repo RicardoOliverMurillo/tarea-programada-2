@@ -94,6 +94,12 @@ public class menuSecretario extends JFrame {
 		contentPane.add(botonCancelarCita);
 		
 		JButton botonReportesPaciente = new JButton("Reportes");
+		botonReportesPaciente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuReportesSecretario().setVisible(true);
+			}
+		});
 		botonReportesPaciente.setBounds(197, 163, 117, 29);
 		contentPane.add(botonReportesPaciente);
 	}

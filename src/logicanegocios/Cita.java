@@ -114,6 +114,29 @@ public class Cita {
 		return action.getCitaResgritada(query);
 	}
 	
+//BETSY REP SEC
+	public List<Cita> getCitasEstado(String pestado) {
+		String query = "SELECT * FROM Citas WHERE Estado ="+pestado+";";
+		return action.getCitaResgritada(query);
+	}
+	
+	public List<Cita> getCitasEspecialidad(String pespecialidad) {
+		String query = "SELECT * FROM Citas WHERE Especialidad ="+pespecialidad+";";
+		return action.getCitaResgritada(query);
+	}
+	
+	public List<Cita> getCitasPaciente(int pcedula) {
+		String query = "SELECT * FROM Citas WHERE CedulaPaciente ="+pcedula+";";
+		return action.getCitaResgritada(query);
+	}
+		
+	public List<Cita> getCitasFecha(String fecha1, String fecha2) {
+		String query = "SELECT * FROM Citas WHERE Fecha BETWEEN"+fecha1+"AND"+fecha2+";";
+		return action.getCitaResgritada(query);
+	}
+//BETSY REP SEC
+
+	
 	public void cancelarCitaPaciente(String fechaCancelada) {		
 		String query = "UPDATE Citas SET Estado = 'Cancelada por paciente' WHERE Fecha = '"+fechaCancelada+"';";
 		action.insert(query);
