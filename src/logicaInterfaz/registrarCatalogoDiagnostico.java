@@ -7,9 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+import logicanegocios.*;
+import logicadao.*;
 
 public class registrarCatalogoDiagnostico extends JFrame {
 
@@ -47,7 +53,7 @@ public class registrarCatalogoDiagnostico extends JFrame {
 		lblNewLabel.setBounds(109, 16, 295, 16);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_4 = new JLabel("InformaciÃ³n del diagnÃ³stico:");
+		JLabel lblNewLabel_4 = new JLabel("Ingrese el nombre del diagn\u00F3stico:");
 		lblNewLabel_4.setBounds(19, 69, 197, 16);
 		contentPane.add(lblNewLabel_4);
 		
@@ -61,6 +67,40 @@ public class registrarCatalogoDiagnostico extends JFrame {
 		campoTextoInformacion.setColumns(10);
 		
 		JButton botonCrearInfoNueva = new JButton("Crear");
+		botonCrearInfoNueva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFrame frame = new JFrame();
+				CatalogoDiagnosticos CatalogoDiagnosticos;
+				String nombre = campoTextoInformacion.getText();
+				
+				CatalogoDiagnosticos = new CatalogoDiagnosticos(nombre);
+			
+
+				if ((campoTextoInformacion.getText().equals("")) || (campoTextoInformacion.getText().equals(""))
+						|| (campoTextoInformacion.getText().equals(""))) {
+					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
+				} else {
+					try {
+						if (CatalogoDiagnosticos.verificarDiagnostico(nombre)) {
+							JOptionPane.showMessageDialog(frame, "ERROR: Ya existe un diagnóstico con ese nombre.");
+							campoTextoInformacion.setText("");
+							
+						} else {
+							CatalogoDiagnosticos.crearDiagnostico();
+							JOptionPane.showMessageDialog(frame, "Diagnóstico Registrado");
+							campoTextoInformacion.setText("");
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				}
+
+			}
+		});
+		
 		botonCrearInfoNueva.setBounds(235, 112, 117, 29);
 		contentPane.add(botonCrearInfoNueva);
 	}
