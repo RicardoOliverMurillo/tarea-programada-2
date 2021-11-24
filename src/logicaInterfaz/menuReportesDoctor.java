@@ -105,14 +105,32 @@ public class menuReportesDoctor extends JFrame {
 		contentPane.add(btnTratamientoAsociadoA);
 		
 		JButton btnCantidadDeCitas = new JButton("Cantidad  de  citas  registradas  en  el  sistema\r\n");
+		btnCantidadDeCitas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new reporteCantCitasDoctor(pcedula).setVisible(true);
+			}
+		});
 		btnCantidadDeCitas.setBounds(85, 152, 285, 29);
 		contentPane.add(btnCantidadDeCitas);
 		
 		JButton btnCantidadDeDiagnsticos = new JButton("Cantidad de diagn\u00F3sticos\r\n");
+		btnCantidadDeDiagnsticos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new reporteCantDiagnosticoDoctor(pcedula).setVisible(true);
+			}
+		});
 		btnCantidadDeDiagnsticos.setBounds(85, 191, 285, 29);
 		contentPane.add(btnCantidadDeDiagnsticos);
 		
 		JButton btnCantidadDeTratamientos = new JButton("Cantidad de tratamientos");
+		btnCantidadDeTratamientos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new reporteCantCitasDoctor(pcedula).setVisible(true);
+			}
+		});
 		btnCantidadDeTratamientos.setBounds(85, 230, 285, 29);
 		contentPane.add(btnCantidadDeTratamientos);
 	}
