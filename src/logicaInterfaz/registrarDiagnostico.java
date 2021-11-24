@@ -7,19 +7,27 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
+import logicanegocios.*;
+import logicadao.*;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class registrarDiagnostico extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField campoTextoObservacion;
+	CatalogoDiagnosticos objCatalogoDiagnoticos = new CatalogoDiagnosticos();
+	String idDiagnostico;
+	daoCatalogoDiagnostico daoCatalogoDiagnostico = new daoCatalogoDiagnostico();
 
 	/**
 	 * Launch the application.
@@ -36,11 +44,24 @@ public class registrarDiagnostico extends JFrame {
 			}
 		});
 	}
+	
+	public List<String> getDiagnosticosRegistrados() throws SQLException {
+		List<CatalogoDiagnosticos> diagnosticos = objCatalogoDiagnoticos.getDiagnosticosRegistrados();
+		List<String> registrosCitas = new ArrayList();
+		for (int i = 0; i<diagnosticos.size(); i++) {
+			registrosCitas.add(diagnosticos.get(i).getNombre());
+		}
+		return registrosCitas;
+	}
+	
+	public registrarDiagnostico() {
+		
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public registrarDiagnostico() {
+	public registrarDiagnostico(String pIdCita) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 437);
 		contentPane = new JPanel();
@@ -64,9 +85,8 @@ public class registrarDiagnostico extends JFrame {
 		lblNewLabel_4.setBounds(35, 157, 88, 16);
 		contentPane.add(lblNewLabel_4);
 		
-		JButton botonRegistrarDiagnostico = new JButton("Registrar Diagnóstico");
-		botonRegistrarDiagnostico.setBounds(35, 301, 171, 29);
-		contentPane.add(botonRegistrarDiagnostico);
+
+		
 		
 		JButton botonRegresar = new JButton("Regresar");
 		botonRegresar.setBounds(294, 301, 117, 29);
@@ -84,5 +104,60 @@ public class registrarDiagnostico extends JFrame {
 		JComboBox comboBoxNivel = new JComboBox();
 		comboBoxNivel.setBounds(119, 103, 101, 27);
 		contentPane.add(comboBoxNivel);
+		comboBoxNivel.addItem("Leve");
+		comboBoxNivel.addItem("Grave");
+		comboBoxNivel.addItem("Muy grave");
+		
+		JButton btnNewButton = new JButton("Buscar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame();
+				int contador = 0;
+				List<String> diagnosticosRegistrados;
+				try {
+					diagnosticosRegistrados = getDiagnosticosRegistrados();
+						while (diagnosticosRegistrados.size() > contador) {
+							comboBoxCatalogo.addItem(diagnosticosRegistrados.get(contador));
+							contador +=1;
+						}
+					} catch (NumberFormatException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}
+		});
+		btnNewButton.setBounds(313, 66, 89, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton botonRegistrarDiagnostico = new JButton("Registrar Diagnóstico");
+		botonRegistrarDiagnostico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame();
+				RegistrarDiagnostico RegistrarDiagnostico;
+				
+				String nombreDiagnostico = comboBoxCatalogo.getSelectedItem().toString().toString();
+				String nivel = comboBoxNivel.getSelectedItem().toString().toString();
+				String obervaciones = campoTextoObservacion.getText();
+				
+				idDiagnostico = daoCatalogoDiagnostico.getIdDiagnostico(nombreDiagnostico);
+				System.out.println("Nombre del diagnostico: " + nombreDiagnostico);
+				System.out.println("ID del diagnostico: " + idDiagnostico);
+				
+				RegistrarDiagnostico = new RegistrarDiagnostico(idDiagnostico,pIdCita,nivel,obervaciones);
+
+				if (campoTextoObservacion.getText().equals(""))  {
+					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
+				} else {
+					RegistrarDiagnostico.crearRegistrarDiagnostico();
+					dispose();
+					new registrarTratamiento(pIdCita,idDiagnostico).setVisible(true);
+					campoTextoObservacion.setText("");
+					
+				}
+			}
+		});
+		botonRegistrarDiagnostico.setBounds(35, 301, 171, 29);
+		contentPane.add(botonRegistrarDiagnostico);
+
 	}
 }
