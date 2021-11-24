@@ -81,5 +81,24 @@ public class daoCita {
 		return false;
 	}
 	
+	public boolean verificarCitaPacientea(String query) throws SQLException {
+		ArrayList<String> horarios = new ArrayList<String>();
+		Connection conn = new Conexion().conexionBaseDatos();
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				horarios.add(rs.getString("Estado"));
+			}
+			if (horarios.size() == 1) {
+				return true;			
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 
 }

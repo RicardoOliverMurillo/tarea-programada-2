@@ -42,6 +42,10 @@ public class Cita {
 		this.hora = phora;
 	}
 	
+	public Cita(int pCedula) {
+		this.cedula = pCedula;
+	}
+	
 	public String getEstado() {
 		return estado;
 	}
@@ -121,6 +125,11 @@ public class Cita {
 	public boolean verificarHorario() throws SQLException {		
 		String query = "SELECT * FROM Horario WHERE Fecha = '"+getFecha()+"' AND Hora = '"+getHora()+"';";
 		return action.verificarFechaHora(query);
+	}
+	
+	public boolean verificarIDCita(int IDCita) throws SQLException {		
+		String query = "SELECT * FROM Citas WHERE ID_Cita = "+IDCita+" AND CedulaPaciente = "+getCedula()+";";
+		return action.verificarCitaPacientea(query);
 	}
 	
 	public List<Cita> getCitasHorarios() {

@@ -100,6 +100,11 @@ public class registrarFuncionario extends JFrame {
 		fechaIngreso.setBounds(255, 197, 156, 26);
 		contentPane.add(fechaIngreso);
 		
+		campoTextoAreaTrabajo = new JTextField();
+		campoTextoAreaTrabajo.setBounds(155, 250, 147, 26);
+		contentPane.add(campoTextoAreaTrabajo);
+		campoTextoAreaTrabajo.setColumns(10);
+		
 		JButton botonCrearFuncionario = new JButton("Crear Funcionario");
 		botonCrearFuncionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -108,6 +113,7 @@ public class registrarFuncionario extends JFrame {
 				Funcionario funcionario;
 				String cedula = campoTextoCedula.getText();
 				String nombre = campoTextoNombre.getText();
+				String area = campoTextoAreaTrabajo.getText();
 				String tipo = comboBoxTipoFuncionario.getSelectedItem().toString();
 				SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
 				String fecha = dFormat.format(fechaIngreso.getDate());
@@ -116,7 +122,7 @@ public class registrarFuncionario extends JFrame {
 					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
 				} else {
 					
-					funcionario = new Funcionario(Integer.parseInt(cedula), nombre, tipo, fecha);
+					funcionario = new Funcionario(Integer.parseInt(cedula), nombre, tipo, fecha,area);
 					
 					if (comboBoxTipoFuncionario.getSelectedItem().toString().equals("Enfermero")) {
 						try {
@@ -126,7 +132,7 @@ public class registrarFuncionario extends JFrame {
 								campoTextoNombre.setText("");
 							} else {
 								dispose();
-								new registrarExperienciaEnfermero(Integer.parseInt(cedula),nombre,tipo,fecha).setVisible(true);
+								new registrarExperienciaEnfermero(Integer.parseInt(cedula),nombre,tipo,fecha,area).setVisible(true);
 							}
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -143,7 +149,7 @@ public class registrarFuncionario extends JFrame {
 								campoTextoNombre.setText("");
 							} else {
 								dispose();
-								new registrarInformacionAdicionalDoctor(Integer.parseInt(cedula),nombre,tipo,fecha).setVisible(true);
+								new registrarInformacionAdicionalDoctor(Integer.parseInt(cedula),nombre,tipo,fecha,area).setVisible(true);
 							}
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -204,10 +210,7 @@ public class registrarFuncionario extends JFrame {
 		botonEditarAreaTrabajo.setBounds(51, 352, 252, 29);
 		contentPane.add(botonEditarAreaTrabajo);
 		
-		campoTextoAreaTrabajo = new JTextField();
-		campoTextoAreaTrabajo.setBounds(155, 250, 147, 26);
-		contentPane.add(campoTextoAreaTrabajo);
-		campoTextoAreaTrabajo.setColumns(10);
+		
 		
 		JLabel lblNewLabel_6 = new JLabel("Contrasenna temporal");
 		lblNewLabel_6.setBounds(470, 70, 111, 14);

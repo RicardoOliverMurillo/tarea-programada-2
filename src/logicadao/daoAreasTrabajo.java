@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
+import logicanegocios.*;
 
 
 public class daoAreasTrabajo {
@@ -26,6 +29,24 @@ public class daoAreasTrabajo {
 		
 	}
 	
+	public List<AreasTrabajo> getAreasAtrabajoRegistrado(String query) {
+		int capacidad;
+		List<AreasTrabajo> diagnosticoRegistrado = new ArrayList<AreasTrabajo>();
+		try {
+			Connection conn = new Conexion().conexionBaseDatos();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				AreasTrabajo objDiagnostico = new AreasTrabajo(rs.getString("Nombre"));
+				diagnosticoRegistrado.add(objDiagnostico);
+			}
+			return diagnosticoRegistrado;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return diagnosticoRegistrado;
+	}
+	
 	public boolean verificarAreasTrabajoX(String query) throws SQLException {
 		ArrayList<Integer> AreasHospital = new ArrayList<Integer>();
 		Connection conn = new Conexion().conexionBaseDatos();
@@ -43,6 +64,28 @@ public class daoAreasTrabajo {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public String getIdAreasTrabajo(String nombreAreaTrabajo) {
+		String query,temp;
+		temp = "'" + nombreAreaTrabajo + "'";
+		String resultado = "";
+		query = "SELECT * FROM AreasHospital WHERE Nombre = " +temp+";";
+		try
+		{
+			Connection conn = new Conexion().conexionBaseDatos();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				resultado = rs.getString("ID_AreaHospital");
+				}
+			conn.close();
+			return resultado;
+			
+		} catch(SQLException e) { 
+			e.printStackTrace(); 
+		}
+		return null;	
 	}
 
 }

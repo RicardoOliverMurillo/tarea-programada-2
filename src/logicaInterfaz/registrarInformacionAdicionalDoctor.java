@@ -45,7 +45,7 @@ public class registrarInformacionAdicionalDoctor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public registrarInformacionAdicionalDoctor(int pcedula, String pnombre, String ptipo, String pfecha) {
+	public registrarInformacionAdicionalDoctor(int pcedula, String pnombre, String ptipo, String pfecha, String area) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 431, 238);
 		contentPane = new JPanel();
@@ -78,7 +78,7 @@ public class registrarInformacionAdicionalDoctor extends JFrame {
 				Funcionario funcionario;
 				String codigoDoctor = campoTextoCodigo.getText();
 				String especialidad = campoTextoEspecialidad.getText();
-				funcionario = new Funcionario(pcedula, pnombre, ptipo, pfecha, Integer.parseInt(codigoDoctor),especialidad);
+				funcionario = new Funcionario(pcedula, pnombre, ptipo, pfecha, area, Integer.parseInt(codigoDoctor),especialidad);
 				try {
 					if(funcionario.verificarCodigoDoctor(Integer.parseInt(codigoDoctor))) {
 						JOptionPane.showMessageDialog(frame, "Codigo de doctor existente");

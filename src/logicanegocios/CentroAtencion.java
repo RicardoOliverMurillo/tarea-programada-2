@@ -2,6 +2,7 @@ package logicanegocios;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import logicadao.daoCentroAtencion;
 
@@ -90,6 +91,11 @@ public class CentroAtencion {
 	public boolean verificarCentroAtencion(String pnombreCentro, String pubicacionCentro) throws SQLException {
 		String query = "SELECT * FROM CentroAtencion WHERE Nombre_CentroAtencion = '"+ pnombreCentro + "' AND Lugar_CentroAtencion ='"+pubicacionCentro+"';";
 		return action.verificarCentroAtencion(query);
+	}
+	
+	public List<CentroAtencion> getCentrosDeAtencionRegistrados() {
+		String query = "SELECT * FROM CentroAtencion";
+		return action.getCentroAtencionRegistrado(query);
 	}
 	
 }

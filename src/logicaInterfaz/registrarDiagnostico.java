@@ -61,7 +61,7 @@ public class registrarDiagnostico extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public registrarDiagnostico(String pIdCita) {
+	public registrarDiagnostico(String pIdCita, String pcedula, String cedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 437);
 		contentPane = new JPanel();
@@ -150,7 +150,7 @@ public class registrarDiagnostico extends JFrame {
 				} else {
 					RegistrarDiagnostico.crearRegistrarDiagnostico();
 					dispose();
-					new registrarTratamiento(pIdCita,idDiagnostico).setVisible(true);
+					new registrarTratamiento(pIdCita,idDiagnostico,String.valueOf(pcedula),cedula).setVisible(true);
 					campoTextoObservacion.setText("");
 					
 				}
