@@ -1,7 +1,9 @@
 package logicanegocios;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import logicadao.daoCita;
@@ -170,6 +172,91 @@ public class Cita {
 	public void realizarCitaCentroMedico(String fechaCancelada) {		
 		String query = "UPDATE Citas SET Estado = 'Realizada' WHERE Fecha = '"+fechaCancelada+"';";
 		action.insert(query);
+	}
+	
+	public List<Cita> getCitas() {
+		String query = "SELECT * FROM Citas;";
+		return action.listCitas(query);
+	}
+	
+	public List<Cita> getCitasFechaDoctor(Date fecha1, Date fecha2) {
+		List<Cita> citasFiltradas = new ArrayList<Cita>();
+		List<Cita> citas = getCitas();
+		for (int i = 0; i<citas.size(); i++) {
+			int result = fecha1.compareTo(dateFormat(citas.get(i).getFecha()))*dateFormat(citas.get(i).getFecha()).compareTo(fecha2);
+			if(result >= 0) {
+				citasFiltradas.add(citas.get(i));
+			}
+		}
+		return citasFiltradas;
+	}	
+	public List<Cita> getCitasFechaPaciente(Date fecha1, Date fecha2, int pcedula) {
+		List<Cita> citasFiltradas = new ArrayList<Cita>();
+		List<Cita> citas = getCitasPaciente(pcedula);
+		for (int i = 0; i<citas.size(); i++) {
+			int result = fecha1.compareTo(dateFormat(citas.get(i).getFecha()))*dateFormat(citas.get(i).getFecha()).compareTo(fecha2);
+			if(result >= 0) {
+				citasFiltradas.add(citas.get(i));
+			}
+		}
+		return citasFiltradas;
+	}
+	
+	
+	/* METODOS GET CITAS PARA PACIENTE */
+	public List<Cita> getCitasPaciente(int pcedula) {
+		String query = "SELECT * FROM Citas WHERE CedulaPaciente =" + pcedula + ";";
+		return action.listCitas(query);
+	}
+	
+	public List<Cita> getCitasEstado(String pestado) {
+		String query = "SELECT * FROM Citas WHERE Estado ='"+pestado+"';";
+		return action.listCitas(query);
+	}
+	
+	public List<Cita> getCitasEstadoPaciente(String pestado, int pcedula) {
+		String query = "SELECT * FROM Citas WHERE Estado ='"+pestado+ "' AND CedulaPaciente = "+pcedula+";";
+		return action.listCitas(query);
+	}
+	
+	public List<Cita> getCitasEspecialidad(String pespecialidad) {
+		String query = "SELECT * FROM Citas WHERE Especialidad ='"+pespecialidad+"';";
+		return action.listCitas(query);
+	}
+	
+	public List<Cita> getCitasEspecialidadPaciente(String pespecialidad, int pcedula) {
+		String query = "SELECT * FROM Citas WHERE Especialidad ='"+pespecialidad+"' AND CedulaPaciente = "+pcedula+";";
+		return action.listCitas(query);
+	}
+	
+	public List<Cita> getCitasFecha(String fecha1, String fecha2, int cedulaPaciente) {
+		
+		Date inicio = dateFormat(fecha1);
+		Date fin = dateFormat(fecha2);
+		
+		List<Cita> citasFiltradas = new ArrayList<Cita>();
+		List<Cita> citas = getCitasPaciente(cedulaPaciente);
+		
+		for (int i = 0; i<citas.size(); i++) {
+			int result = inicio.compareTo(dateFormat(citas.get(i).getFecha()))*dateFormat(citas.get(i).getFecha()).compareTo(fin);
+			if(result >= 0) {
+				citasFiltradas.add(citas.get(i));
+			}
+		}
+		return citasFiltradas;
+	}
+	
+
+	public static Date dateFormat(String date) {
+		Date dateFormated = new Date();
+		SimpleDateFormat formatter1=new SimpleDateFormat("dd-MM-yyyy");
+		try {
+			dateFormated = formatter1.parse(date);
+			return dateFormated;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
+		return null;
 	}
 	
 }

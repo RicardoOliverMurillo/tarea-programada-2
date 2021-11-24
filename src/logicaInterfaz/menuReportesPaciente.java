@@ -12,6 +12,8 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class menuReportesPaciente extends JFrame {
 
@@ -32,11 +34,10 @@ public class menuReportesPaciente extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	public menuReportesPaciente() {
+		
+	}
+	public menuReportesPaciente(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 577, 364);
 		contentPane = new JPanel();
@@ -51,18 +52,39 @@ public class menuReportesPaciente extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuPaciente(pcedula).setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(418, 269, 117, 29);
 		contentPane.add(botonRegresar);
 		
 		JButton botonCitas = new JButton("Citas asociadas al paciente");
+		botonCitas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new reporteCitasPaciente(pcedula).setVisible(true);
+			}
+		});
 		botonCitas.setBounds(144, 63, 245, 29);
 		contentPane.add(botonCitas);
 		
 		JButton botonDiagnostico = new JButton("Diagnósticos asociados al paciente");
+		botonDiagnostico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new reporteDiagnosticoPaciente(pcedula).setVisible(true);
+			}
+		});
 		botonDiagnostico.setBounds(144, 105, 245, 29);
 		contentPane.add(botonDiagnostico);
 		
 		JButton botonTratamientos = new JButton("Tratamientos asociados al paciente");
+		botonTratamientos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new reporteTratamientoPaciente(pcedula).setVisible(true);
+			}
+		});
 		botonTratamientos.setBounds(144, 146, 245, 29);
 		contentPane.add(botonTratamientos);
 		

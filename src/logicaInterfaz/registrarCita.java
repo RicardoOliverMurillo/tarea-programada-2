@@ -29,6 +29,7 @@ import logicanegocios.LOGCitas;
 import logicanegocios.Paciente;
 
 import logicaMensajeria.*;
+import logicanegocios.*;
 
 import com.github.lgooddatepicker.components.TimePicker;
 

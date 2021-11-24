@@ -91,6 +91,12 @@ public class menuPaciente extends JFrame {
 		contentPane.add(botonCancelarCita);
 		
 		JButton botonReportesPaciente = new JButton("Reportes");
+		botonReportesPaciente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuReportesPaciente(pcedula).setVisible(true);
+			}
+		});
 		botonReportesPaciente.setBounds(237, 188, 117, 29);
 		contentPane.add(botonReportesPaciente);
 	}

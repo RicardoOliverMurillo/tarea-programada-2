@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import logicanegocios.*;
+
 public class daoPaciente {
 	
 	private Statement stmt;
@@ -60,6 +62,30 @@ public class daoPaciente {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ArrayList<Paciente> listPacientes(String query) {
+		ArrayList<Paciente> pacientesRegistrados = new ArrayList<Paciente>();
+		try {
+			Connection conn = new Conexion().conexionBaseDatos();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Paciente paciente = new Paciente();
+				paciente.setCedula(rs.getInt("Cedula"));
+				paciente.setNombre(rs.getString("Nombre"));
+				paciente.setFechaNacimiento(rs.getString("FechaNacimiento"));
+				paciente.setTipoSangre(rs.getString("TipoSangre"));
+				paciente.setNacionalidad(rs.getString("Nacionalidad"));
+				//paciente.setNacionalidad(rs.getString("CorreoElectronico"));
+				paciente.setLugarResidencia(rs.getString("LugarResidencia"));
+				pacientesRegistrados.add(paciente);
+			}
+			return pacientesRegistrados;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pacientesRegistrados;
 	}
 
 }

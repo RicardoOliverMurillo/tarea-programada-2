@@ -44,4 +44,8 @@ public class Usuario {
 	public Usuario login (Usuario user) {
 		return new daoLogin().loginUser("SELECT * FROM Users WHERE [dbo].[Users].[Cedula] = "+  user.getCedula() + ";" );
 	}
+	
+	public void registrarUsuario (Usuario user) {
+		new daoLogin().createUser("INSERT INTO Users VALUES (" + user.getCedula() + ",'"+ user.getContrasenna() +"', ' "+ user.getRol() +"');");
+	}
 }
