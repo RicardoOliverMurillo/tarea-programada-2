@@ -80,6 +80,28 @@ public class daoCita {
 		}
 		return false;
 	}
+	public List<Cita> listCitas(String query) {
+		List<Cita> citaRegistrada = new ArrayList<Cita>();
+		try {
+			Connection conn = new Conexion().conexionBaseDatos();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Cita cita = new Cita();
+				cita.setCedula(rs.getInt("CedulaPaciente"));
+				cita.setEspecialidad(rs.getString("Especialidad"));
+				cita.setEstado(rs.getString("Estado"));
+				cita.setFecha(rs.getString("Fecha"));
+				cita.setHora(rs.getString("Hora"));
+				cita.setObservacion(rs.getString("Observacion"));
+				citaRegistrada.add(cita);
+			}
+			return citaRegistrada;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return citaRegistrada;
+	}
 	
 
 }

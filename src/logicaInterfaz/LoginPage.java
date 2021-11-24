@@ -26,7 +26,7 @@ public class LoginPage extends JFrame {
 	private JTextField userTextField;
 	private JPasswordField passwordField;
 	
-	private Usuario userSession = new Usuario();
+	public Usuario userSession = new Usuario();
 
 	/**
 	 * Launch the application.

@@ -34,11 +34,12 @@ public class menuReportesSecretario extends JFrame {
 			}
 		});
 	}
+	public menuReportesSecretario() {}
 
 	/**
 	 * Create the frame.
 	 */
-	public menuReportesSecretario() {
+	public menuReportesSecretario(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 443, 324);
 		contentPane = new JPanel();
@@ -56,7 +57,7 @@ public class menuReportesSecretario extends JFrame {
 		botonRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new menuSecretario().setVisible(true);
+				new menuSecretario(pcedula).setVisible(true);
 			}
 		});
 		botonRegresar.setBounds(272, 207, 117, 29);
@@ -66,7 +67,7 @@ public class menuReportesSecretario extends JFrame {
 		botonCitas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new reporteCitasSecretario().setVisible(true);
+				new reporteCitasSecretario(pcedula).setVisible(true);
 			}
 		});
 		botonCitas.setBounds(59, 88, 285, 29);
@@ -76,7 +77,7 @@ public class menuReportesSecretario extends JFrame {
 		botonHospitalizacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new reporteHospitalizacionesSecretario().setVisible(true);
+				new reporteHospitalizacionesSecretario(pcedula).setVisible(true);
 			}
 		});
 		botonHospitalizacion.setBounds(59, 146, 285, 29);

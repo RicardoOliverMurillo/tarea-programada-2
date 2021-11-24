@@ -21,6 +21,7 @@ import com.toedter.calendar.JDayChooser;
 import logicamensajes.Documento;
 import logicanegocios.AreasTrabajo;
 import logicanegocios.CatalogoDiagnosticos;
+import logicanegocios.CatalogoTratamientos;
 import logicanegocios.Cita;
 import logicanegocios.Paciente;
 import logicanegocios.RegistrarDiagnostico;
@@ -39,10 +40,10 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSplitPane;
 
-public class reporteDiagnosticoPaciente extends JFrame {
+public class reporteTratamientoDoctor extends JFrame {
 
 	private JPanel contentPane;
-	private List<List<String>> infoDiagnostico = new ArrayList();
+	private List<List<String>> infoTratamiento = new ArrayList();
 	private JTable table;
 	private DefaultTableModel model;
 	private Object[] rowData;
@@ -55,7 +56,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					reporteDiagnosticoPaciente frame = new reporteDiagnosticoPaciente();
+					reporteTratamientoDoctor frame = new reporteTratamientoDoctor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,19 +65,12 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		});
 	}
 
-	private List<String> getNombreDiagnostico() {
-		List<CatalogoDiagnosticos> diagnostico = new CatalogoDiagnosticos().getDiagnosticosRegistrados();
-		List<String> nombreDiagnostico = new ArrayList();
-		for(int i=0; i<diagnostico.size();i++) {
-			nombreDiagnostico.add(diagnostico.get(i).getNombre());
-		}
-		return nombreDiagnostico;
-	}
-	
-	public reporteDiagnosticoPaciente() {}
+	private List<String> nombreTratamiento = new CatalogoTratamientos().getNombreTratamiento();
+	private List<String> tipoTratamiento = new CatalogoTratamientos().getTipoTratamiento();
 
-	public reporteDiagnosticoPaciente(int pcedula) {
-		
+	public reporteTratamientoDoctor() {}
+
+	public reporteTratamientoDoctor(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 677, 498);
 		contentPane = new JPanel();
@@ -84,7 +78,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		Label labelTitulo = new Label("Diagnostico asociado a un paciente\r\n");
+		Label labelTitulo = new Label("Tratamiento a un paciente modulo Doctor\r\n");
 		labelTitulo.setAlignment(Label.CENTER);
 		labelTitulo.setFont(new Font("Dialog", Font.BOLD, 15));
 		labelTitulo.setBounds(10, 10, 643, 38);
@@ -94,7 +88,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		botonRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new menuReportesPaciente(pcedula).setVisible(true);
+				new menuReportesDoctor(pcedula).setVisible(true);
 				System.out.println(pcedula);
 			}
 		});
@@ -113,14 +107,18 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		fechaRango1_1.setBounds(406, 100, 247, 26);
 		contentPane.add(fechaRango1_1);
 		
-		Label labelNivel = new Label("Nivel:");
+		Label labelNivel = new Label("Tipo:");
 		labelNivel.setBounds(20, 140, 59, 21);
 		contentPane.add(labelNivel);
 		
-		JComboBox cbNivel = new JComboBox();
-		cbNivel.setModel(new DefaultComboBoxModel(new String[] {"", "Leve", "Grave", "Muy grave"}));
-		cbNivel.setBounds(94, 140, 179, 21);
-		contentPane.add(cbNivel);
+		JComboBox cbTipo = new JComboBox();
+		cbTipo.insertItemAt(null, 0);
+		for(int i=0; i<tipoTratamiento.size();i++) {
+			cbTipo.insertItemAt(tipoTratamiento.get(i),i+1);
+		}
+		
+		cbTipo.setBounds(94, 140, 179, 21);
+		contentPane.add(cbTipo);
 		
 		Label labelEstado_1 = new Label("Nombre:");
 		labelEstado_1.setBounds(318, 140, 82, 21);
@@ -128,8 +126,8 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		
 		JComboBox cbNombre = new JComboBox();
 		cbNombre.insertItemAt(null, 0);
-		for(int i=0; i<getNombreDiagnostico().size();i++) {
-			cbNombre.insertItemAt(getNombreDiagnostico().get(i),i+1);
+		for(int i=0; i<nombreTratamiento.size();i++) {
+			cbNombre.insertItemAt(nombreTratamiento.get(i),i+1);
 		}
 		
 		cbNombre.setBounds(406, 140, 247, 21);
@@ -142,7 +140,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 				
 		model = new DefaultTableModel();
 		table = new JTable();
-		rowData = new Object[]{"ID Diagnostico", "Nombre", "Nivel", "Observaciones", "Cedula Paciente", "Fecha"};
+		rowData = new Object[]{"ID Tratamiento", "Nombre", "Dosis", "Tipo Tratamiento", "Cedula Paciente", "Fecha"};
 		table.setModel(model);
 		model.setColumnIdentifiers(rowData);
 		scrollPane.setViewportView(table);
@@ -153,28 +151,30 @@ public class reporteDiagnosticoPaciente extends JFrame {
 				java.util.Date d1 = fechaRango1.getDate();
 				java.util.Date d2 = fechaRango1_1.getDate();
 				
+				
 				if((d1!=null) && (d2!=null)){
-					if(cbNivel.getSelectedItem()!=""|| cbNombre.getSelectedItem()!=null) {
+					if(cbTipo.getSelectedItem()!=null|| cbNombre.getSelectedItem()!=null) {
 						JOptionPane.showMessageDialog(null, "No se puede hacer consulta con multiples opciones selecionadas");
 					}else{
-						infoDiagnostico = new RegistrarDiagnostico().getDiagnosticosFecha(d1, d2,pcedula);
+						infoTratamiento =  new CatalogoTratamientos().getFechaTratamiento(d1, d2);
 						setRowValues();
 					}
-				}else if(cbNivel.getSelectedItem()!="") {
+				}else if(cbTipo.getSelectedItem()!=null) {
 					if( d1!=null || d2!=null ||cbNombre.getSelectedItem()!=null) {
 						JOptionPane.showMessageDialog(null, "No se puede hacer consulta con multiples opciones selecionadas");
 					}else {
-						infoDiagnostico = new RegistrarDiagnostico().getNivelDiagnostico(cbNivel.getSelectedItem().toString(),pcedula);
+						infoTratamiento = new CatalogoTratamientos().getTipoTratamiento(cbTipo.getSelectedItem().toString());
 						setRowValues();
-						}
+					}
 				}else if(cbNombre.getSelectedItem()!=null) {
-					if( d1!=null || d2!=null ||cbNivel.getSelectedItem()!="") {
+					if( d1!=null || d2!=null ||cbTipo.getSelectedItem()!= null) {
 						JOptionPane.showMessageDialog(null, "No se puede hacer consulta con multiples opciones selecionadas");
 					}else {
-						infoDiagnostico =  new RegistrarDiagnostico().getNombrelDiagnostico(cbNombre.getSelectedItem().toString(),pcedula);
-						setRowValues();					}
+						infoTratamiento =  new CatalogoTratamientos().getNombreTratamiento(cbNombre.getSelectedItem().toString());
+						setRowValues();					
+					}
 				}else{
-					infoDiagnostico = new RegistrarDiagnostico().getDiagnostico(pcedula);
+					infoTratamiento = new CatalogoTratamientos().getTratamientos();
 					setRowValues();	
 				}
 			}
@@ -226,29 +226,30 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		});
 		btnGenerarPdf.setBounds(263, 64, 117, 21);
 		contentPane.add(btnGenerarPdf);
-		}*/
+	*/		
 		JButton btnLimpiarFiltros = new JButton("Limpiar Filtros");
 		btnLimpiarFiltros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fechaRango1.setDate(null); 
 				fechaRango1_1.setDate(null); 
-				cbNivel.setSelectedIndex(0);
+				cbTipo.setSelectedIndex(0);
 				cbNombre.setSelectedIndex(0);
 				model.setRowCount(0);
 			}
 		});
 		btnLimpiarFiltros.setBounds(406, 422, 115, 29);
 		contentPane.add(btnLimpiarFiltros);
+
 	}
 	private void setRowValues() {
 		model.setRowCount(0);
-		for(int i=0; i< infoDiagnostico.size();i++) {
-			rowData[0]= infoDiagnostico.get(i).get(0);
-			rowData[1]= infoDiagnostico.get(i).get(1);
-			rowData[2]= infoDiagnostico.get(i).get(2);
-			rowData[3]= infoDiagnostico.get(i).get(3);
-			rowData[4]= infoDiagnostico.get(i).get(4);
-			rowData[5]= infoDiagnostico.get(i).get(5);
+		for(int i=0; i< infoTratamiento.size();i++) {
+			rowData[0]= infoTratamiento.get(i).get(0);
+			rowData[1]= infoTratamiento.get(i).get(1);
+			rowData[2]= infoTratamiento.get(i).get(2);
+			rowData[3]= infoTratamiento.get(i).get(3);
+			rowData[4]= infoTratamiento.get(i).get(4);
+			rowData[5]= infoTratamiento.get(i).get(5);
 			model.addRow(rowData);
 		}
 	}

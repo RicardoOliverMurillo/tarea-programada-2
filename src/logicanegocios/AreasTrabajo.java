@@ -1,7 +1,9 @@
 package logicanegocios;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import logicadao.daoAreasTrabajo;
 import logicadao.daoCentroAtencion;
 
 public class AreasTrabajo {
@@ -11,6 +13,7 @@ public class AreasTrabajo {
 	
 	
 	private daoCentroAtencion action = new daoCentroAtencion();
+	private daoAreasTrabajo actionAreas= new daoAreasTrabajo();
 
 
 	public AreasTrabajo() {};
@@ -42,6 +45,11 @@ public class AreasTrabajo {
 	public boolean verificarAreasTrabajo(String pnombreAreaTrabajo) throws SQLException {
 		String query = "SELECT * FROM AreasHospital WHERE Nombre = '"+ pnombreAreaTrabajo+"';";
 		return action.verificarCentroAtencion(query);
+	}
+	
+	public ArrayList<String> getNombreAreasTrabajo(){
+		String query = "SELECT * FROM AreasHospital;";
+		return actionAreas.listAreaTrabajo(query);
 	}
 	
 	

@@ -35,14 +35,12 @@ public class menuSecretario extends JFrame {
 			}
 		});
 	}
-	public menuSecretario() {
-		
-	}
+	public menuSecretario() {}
 	
 	/**
 	 * Create the frame.
 	 */
-	public menuSecretario(int pSecretaria) {
+	public menuSecretario(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 579, 357);
 		contentPane = new JPanel();
@@ -71,7 +69,7 @@ public class menuSecretario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new asignarCita(pSecretaria).setVisible(true);
+					new asignarCita(pcedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -86,7 +84,7 @@ public class menuSecretario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new cancelarCitaCentroMedico(pSecretaria).setVisible(true);
+					new cancelarCitaCentroMedico(pcedula).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -97,6 +95,12 @@ public class menuSecretario extends JFrame {
 		contentPane.add(botonCancelarCita);
 		
 		JButton botonReportesPaciente = new JButton("Reportes");
+		botonReportesPaciente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuReportesSecretario(pcedula).setVisible(true);
+			}
+		});
 		botonReportesPaciente.setBounds(197, 163, 117, 29);
 		contentPane.add(botonReportesPaciente);
 	}

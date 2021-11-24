@@ -39,7 +39,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSplitPane;
 
-public class reporteDiagnosticoPaciente extends JFrame {
+public class reporteDiagnosticoDoctor extends JFrame {
 
 	private JPanel contentPane;
 	private List<List<String>> infoDiagnostico = new ArrayList();
@@ -55,7 +55,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					reporteDiagnosticoPaciente frame = new reporteDiagnosticoPaciente();
+					reporteDiagnosticoDoctor frame = new reporteDiagnosticoDoctor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,10 +73,9 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		return nombreDiagnostico;
 	}
 	
-	public reporteDiagnosticoPaciente() {}
+	public reporteDiagnosticoDoctor() {}
 
-	public reporteDiagnosticoPaciente(int pcedula) {
-		
+	public reporteDiagnosticoDoctor(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 677, 498);
 		contentPane = new JPanel();
@@ -94,7 +93,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		botonRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new menuReportesPaciente(pcedula).setVisible(true);
+				new menuReportesDoctor(pcedula).setVisible(true);
 				System.out.println(pcedula);
 			}
 		});
@@ -157,24 +156,24 @@ public class reporteDiagnosticoPaciente extends JFrame {
 					if(cbNivel.getSelectedItem()!=""|| cbNombre.getSelectedItem()!=null) {
 						JOptionPane.showMessageDialog(null, "No se puede hacer consulta con multiples opciones selecionadas");
 					}else{
-						infoDiagnostico = new RegistrarDiagnostico().getDiagnosticosFecha(d1, d2,pcedula);
+						infoDiagnostico = new RegistrarDiagnostico().getDiagnosticosFecha(d1, d2);
 						setRowValues();
 					}
 				}else if(cbNivel.getSelectedItem()!="") {
 					if( d1!=null || d2!=null ||cbNombre.getSelectedItem()!=null) {
 						JOptionPane.showMessageDialog(null, "No se puede hacer consulta con multiples opciones selecionadas");
 					}else {
-						infoDiagnostico = new RegistrarDiagnostico().getNivelDiagnostico(cbNivel.getSelectedItem().toString(),pcedula);
+						infoDiagnostico = new RegistrarDiagnostico().getNivelDiagnostico(cbNivel.getSelectedItem().toString());
 						setRowValues();
 						}
 				}else if(cbNombre.getSelectedItem()!=null) {
 					if( d1!=null || d2!=null ||cbNivel.getSelectedItem()!="") {
 						JOptionPane.showMessageDialog(null, "No se puede hacer consulta con multiples opciones selecionadas");
 					}else {
-						infoDiagnostico =  new RegistrarDiagnostico().getNombrelDiagnostico(cbNombre.getSelectedItem().toString(),pcedula);
+						infoDiagnostico =  new RegistrarDiagnostico().getNombrelDiagnostico(cbNombre.getSelectedItem().toString());
 						setRowValues();					}
 				}else{
-					infoDiagnostico = new RegistrarDiagnostico().getDiagnostico(pcedula);
+					infoDiagnostico = new RegistrarDiagnostico().getDiagnostico();
 					setRowValues();	
 				}
 			}
@@ -183,21 +182,21 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		btnBuscar.setBounds(542, 172, 111, 29);
 		contentPane.add(btnBuscar);
 				
-/*		JButton btnGenerarCSV = new JButton("Generar CSV");
+		JButton btnGenerarCSV = new JButton("Generar CSV");
 		btnGenerarCSV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(infoDiagnostico.size()>0) {
-					documento.csvGenerator(infoDiagnostico);
+					documento.diagnosticoCSV(infoDiagnostico);
 					JOptionPane.showMessageDialog(null, "El CSV se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
 				}
 			}
 		});
-		btnGenerarCSV.setHorizontalAlignment(SwingConstants.RIGHT);
+				btnGenerarCSV.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnGenerarCSV.setBounds(10, 64, 111, 21);
 		contentPane.add(btnGenerarCSV);
-		
+		/*
 		JButton btnGenerarHtml = new JButton("Generar HTML");
 		btnGenerarHtml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -226,7 +225,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		});
 		btnGenerarPdf.setBounds(263, 64, 117, 21);
 		contentPane.add(btnGenerarPdf);
-		}*/
+	*/		
 		JButton btnLimpiarFiltros = new JButton("Limpiar Filtros");
 		btnLimpiarFiltros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -239,6 +238,7 @@ public class reporteDiagnosticoPaciente extends JFrame {
 		});
 		btnLimpiarFiltros.setBounds(406, 422, 115, 29);
 		contentPane.add(btnLimpiarFiltros);
+
 	}
 	private void setRowValues() {
 		model.setRowCount(0);
