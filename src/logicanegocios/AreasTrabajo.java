@@ -1,6 +1,7 @@
 package logicanegocios;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import logicadao.*;
@@ -48,6 +49,11 @@ public class AreasTrabajo {
 	public List<AreasTrabajo> getAreasTrabajo() {
 		String query = "SELECT * FROM AreasHospital";
 		return action.getAreasAtrabajoRegistrado(query);
+	}
+	
+	public ArrayList<String> getNombreAreasTrabajo(){
+		String query = "SELECT * FROM AreasHospital;";
+		return action.listAreaTrabajo(query);
 	}
 	
 	

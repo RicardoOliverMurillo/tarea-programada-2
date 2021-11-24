@@ -1,6 +1,7 @@
 package logicanegocios;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import logicadao.daoFuncionario;
 import logicadao.daoPaciente;
@@ -117,6 +118,11 @@ public class Paciente {
 	public boolean verificarNumero() throws SQLException {
 		String query = "SELECT * FROM TelefonoPaciente WHERE NumeroTelefono = " +getTelefono()+" AND CedulaPaciente = " +getCedula()+";";
 		return action.verificarTelefonoPaciente(query);
+	}
+	
+	public ArrayList<Paciente> getPacientes() {
+		String query = "SELECT * FROM Paciente;";
+		return action.listPacientes(query);
 	}
 
 }

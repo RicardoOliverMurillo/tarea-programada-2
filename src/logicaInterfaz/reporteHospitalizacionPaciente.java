@@ -13,6 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import logicaMensajeria.*;
+import logicanegocios.*;
+
 public class reporteHospitalizacionPaciente extends JFrame {
 
 	private JPanel contentPane;

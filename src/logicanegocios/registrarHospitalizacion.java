@@ -18,7 +18,7 @@ public class registrarHospitalizacion {
 	private String idFuncionario;
 	
 	
-	private daoRegistrarTratamiento action = new daoRegistrarTratamiento();
+	private daoRegistrarHospitalizacion action = new daoRegistrarHospitalizacion();
 
 
 	public registrarHospitalizacion() {};
@@ -34,6 +34,10 @@ public class registrarHospitalizacion {
 		this.fechaFinalizacion = pFechaFinalizacion;
 		this.especialidad = pEspecialidad;
 		this.idFuncionario = pIDFuncionario;
+	}
+	
+	public registrarHospitalizacion (String pFechhaInicio) {
+		this.fechaInicio = pFechhaInicio;
 	}
 	
 
@@ -141,6 +145,19 @@ public class registrarHospitalizacion {
 				+ getCentroAtencion() + "','" + getIdPaciente()  + "','" + getNombrePaciente() + "','" + getDiagnostico() + "','" + getFechaInicio() + "','" + getFechaFinalizacion() + "','"  + getEspecialidad() + "','" + getIdFuncionario() + "')";
 		action.insert(query);
 	}
+	
+	public List<registrarHospitalizacion> getHospitalizacionesRegistradas(int pCedulaPaciente ) {
+		String query = "SELECT TOP 1 * FROM Hospitalizaciones WHERE ID_Paciente = " + pCedulaPaciente + "ORDER BY ID_Hospitalizacion DESC" + ";";
+		return action.getHospitalizacionesRegistradasDAO(query);
+	}
+	
+	public List<registrarHospitalizacion> getIDHospitalizacion(String pFechaInicio) {
+		String query = "SELECT TOP 1 * FROM Hospitalizaciones WHERE FechaInicio  = " + pFechaInicio+ ";";
+		return action.getHospitalizacionesRegistradasBYID(query);
+	}
+	
+	
+	
 	
 	
 	

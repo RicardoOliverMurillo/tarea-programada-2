@@ -87,5 +87,21 @@ public class daoAreasTrabajo {
 		}
 		return null;	
 	}
+	
+	public ArrayList<String> listAreaTrabajo(String query) {
+		ArrayList<String> areaTrabajo = new ArrayList<String>();
+		try {
+			Connection conn = new Conexion().conexionBaseDatos();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				areaTrabajo.add(rs.getString("Nombre"));
+			}
+			return areaTrabajo;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return areaTrabajo;
+	}
 
 }
