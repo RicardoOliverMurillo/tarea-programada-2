@@ -86,7 +86,7 @@ public class menuEnfermero extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new cancelarCitaCentroMedico(pCedula).setVisible(true);
+					new cancelarCitaCentroMedico(String.valueOf(pCedula)).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

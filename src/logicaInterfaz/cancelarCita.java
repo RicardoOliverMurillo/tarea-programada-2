@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import logicadao.daoLOGCitas;
 import logicanegocios.Cita;
 import logicanegocios.LOGCitas;
+import logicaMensajeria.*;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,6 +38,10 @@ public class cancelarCita extends JFrame {
 	String idInSession;
 	String idInSessionCita;
 	Cita cita = new Cita();
+	CorreoElectronico CorreoElectronico = new CorreoElectronico();
+	SMS SMS = new SMS();
+	private JTextField textField;
+	private JTextField textField_1;
 	//List<Cita> citas = cita.getCitasRegistradas(1);
 
 	/**
@@ -55,7 +60,7 @@ public class cancelarCita extends JFrame {
 		});
 	}
 	
-	public cancelarCita() {};
+	
 	
 	public List<String> getCitasRegistradas(int cedula) throws SQLException {
 		List<Cita> citas = cita.getCitasRegistradas(cedula);
@@ -71,10 +76,15 @@ public class cancelarCita extends JFrame {
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
+	
+	public cancelarCita() throws SQLException {
+		
+	}
+	
 	public cancelarCita(int pcedula) throws SQLException {
 		System.out.println(pcedula);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 339, 232);
+		setBounds(100, 100, 449, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -96,26 +106,51 @@ public class cancelarCita extends JFrame {
 		comboBoxCitas.setBounds(172, 65, 135, 27);
 		contentPane.add(comboBoxCitas);
 		
+		JLabel lblNewLabel_1 = new JLabel("Correo electr\u00F3nico:");
+		lblNewLabel_1.setBounds(19, 167, 117, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setBounds(192, 164, 86, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Numero de telefono:");
+		lblNewLabel_2.setBounds(19, 205, 117, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(192, 202, 86, 20);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
 		JButton botonCancelarCita = new JButton("Cancelar cita");
 		botonCancelarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame();
 				int contador = 0;
+				
 				String fechaCita = comboBoxCitas.getSelectedItem().toString();
 				SimpleDateFormat formatoDate = new SimpleDateFormat("dd-MM-yyyy");
-				Date fecha = new Date();
-				String fecha2 = formatoDate.format(fecha);
 				
+				String correolecronico = textField.getText();
+				String numerotelefono = textField_1.getText();
+				
+				
+				
+				Date fecha = new Date();
+				String fecha2 = formatoDate.format(fecha);	
+				
+				String mensajeUsuario = "Cita cancelada: " + fechaCita;
 
 				try {
 					Date fechaCancelarCita = formatoDate.parse(fechaCita);
 					Date fechaActual = formatoDate.parse(fecha2);
+			    
 					if (fechaCancelarCita.compareTo(fechaActual) > 0) {
-						JOptionPane.showMessageDialog(frame, "La cita a cancelar ocurre despues");
-						
-					}else if (fechaCancelarCita.compareTo(fechaActual) < 0){
 						cita.cancelarCitaPaciente(fechaCita);
-						fechaCita = comboBoxCitas.getSelectedItem().toString().toString();
+						CorreoElectronico.enviarCorreoElectronico(correolecronico,mensajeUsuario);
+						//SMS.enviarSMS(mensajeUsuario, numerotelefono);
 						idCita = LOG.getIDcita(fechaCita);
 						bitacora = new LOGCitas (EstadoMedico, String.valueOf(pcedula), idCita);
 						bitacora.logRealizarCitaDR();
@@ -132,30 +167,18 @@ public class cancelarCita extends JFrame {
 						}
 						
 					}else if (fechaCancelarCita.compareTo(fechaActual) == 0) {
-						JOptionPane.showMessageDialog(frame, "La cita a cancelar ocurre en el mismo dia");
+						JOptionPane.showMessageDialog(frame, "La cita a cancelar ocurre en el mismo dia, no se puede cancelar");
 					}
 					
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-
-//				cita.cancelarCitaPaciente(fechaCita);
-//				JOptionPane.showMessageDialog(frame, "Cita cancelada por el paciente");
-//				comboBoxCitas.removeAllItems();
-//				try {
-//					while (getCitasRegistradas().size() > contador) {
-//						comboBoxCitas.addItem(getCitasRegistradas().get(contador));
-//						contador +=1;
-//					}
-//				} catch (SQLException e2) {
-//					// TODO Auto-generated catch block
-//					e2.printStackTrace();
-//				}
 			}
 		});
 		botonCancelarCita.setBounds(19, 114, 117, 29);
 		contentPane.add(botonCancelarCita);
+		
+		
 	}
 }
