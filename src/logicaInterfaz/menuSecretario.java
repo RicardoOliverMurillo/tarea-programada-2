@@ -86,7 +86,7 @@ public class menuSecretario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-					new cancelarCitaCentroMedico(pSecretaria).setVisible(true);
+					new cancelarCitaCentroMedico(String.valueOf(pSecretaria)).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

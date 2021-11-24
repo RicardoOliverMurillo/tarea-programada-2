@@ -28,6 +28,8 @@ import logicanegocios.Cita;
 import logicanegocios.LOGCitas;
 import logicanegocios.Paciente;
 
+import logicaMensajeria.*;
+
 import com.github.lgooddatepicker.components.TimePicker;
 
 public class registrarCita extends JFrame {
@@ -44,6 +46,10 @@ public class registrarCita extends JFrame {
 	String idInSession;
 	String idInSessionCita;
 	Cita cita = new Cita();
+	CorreoElectronico CorreoElectronico = new CorreoElectronico();
+	SMS SMS = new SMS();
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -61,7 +67,7 @@ public class registrarCita extends JFrame {
 		});
 	}
 	
-	public registrarCita() {};
+	
 	
 	public List<String> getCitasHorario() {
 		List<Cita> citas = cita.getCitasHorarios();
@@ -84,6 +90,12 @@ public class registrarCita extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	
+	
+	public registrarCita() {
+		
+	}
 	public registrarCita(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 437);
@@ -116,6 +128,16 @@ public class registrarCita extends JFrame {
 		comboBoxHora.setBounds(162, 150, 179, 27);
 		contentPane.add(comboBoxHora);
 		
+		textField = new JTextField();
+		textField.setBounds(162, 293, 209, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(162, 321, 209, 20);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
 		JComboBox comboBoxFecha = new JComboBox(getCitasHorario().toArray());
 		comboBoxFecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,16 +162,26 @@ public class registrarCita extends JFrame {
 				JFrame frame = new JFrame();
 				Cita cita;
 				int contador = 0;
+				
+				String correolecronico = textField.getText();
+				String numerotelefono = textField_1.getText();
+				
 				String especialidad = campoTextoEspecialidad.getText();
 				String observacion = campoTextoObservacion.getText();
 				String fecha = comboBoxFecha.getSelectedItem().toString();
 				String hora = comboBoxHora.getSelectedItem().toString();
+				
+				String mensajeUsuario = "Cita resgistrada: " + fecha;
 				
 				if ((campoTextoEspecialidad.getText().equals("")) || (campoTextoObservacion.getText().equals(""))) {
 					JOptionPane.showMessageDialog(frame, "Complete todos los campos del formulario");
 				} else {
 					cita = new Cita("Registrada",especialidad, fecha, hora, observacion, pcedula);
 					cita.crearCita();
+					
+					CorreoElectronico.enviarCorreoElectronico(correolecronico,mensajeUsuario);
+					//SMS.enviarSMS(mensajeUsuario, numerotelefono);
+					
 					fechaCita = comboBoxFecha.getSelectedItem().toString().toString();
 					idCita = LOG.getIDcita(fechaCita);
 					bitacora = new LOGCitas (EstadoMedico, String.valueOf(pcedula), idCita);
@@ -162,11 +194,11 @@ public class registrarCita extends JFrame {
 				}	
 			}
 		});
-		botonRegistrarCita.setBounds(35, 301, 149, 29);
+		botonRegistrarCita.setBounds(10, 358, 149, 29);
 		contentPane.add(botonRegistrarCita);
 		
 		JButton botonRegresar = new JButton("Regresar");
-		botonRegresar.setBounds(294, 301, 117, 29);
+		botonRegresar.setBounds(294, 358, 117, 29);
 		contentPane.add(botonRegresar);
 		
 		campoTextoObservacion = new JTextField();
@@ -178,5 +210,15 @@ public class registrarCita extends JFrame {
 		campoTextoEspecialidad.setBounds(164, 64, 177, 26);
 		contentPane.add(campoTextoEspecialidad);
 		campoTextoEspecialidad.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Correo electr\u00F3nico:");
+		lblNewLabel_5.setBounds(35, 296, 124, 14);
+		contentPane.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_6 = new JLabel("Telefono celular");
+		lblNewLabel_6.setBounds(35, 321, 94, 14);
+		contentPane.add(lblNewLabel_6);
+		
+		
 	}
 }

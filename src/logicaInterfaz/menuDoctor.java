@@ -86,7 +86,7 @@ public class menuDoctor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					dispose();
-					new cancelarCitaCentroMedico(pcedula).setVisible(true);
+					new cancelarCitaCentroMedico(String.valueOf(pcedula)).setVisible(true);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

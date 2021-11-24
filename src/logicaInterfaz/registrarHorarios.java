@@ -2,6 +2,7 @@ package logicaInterfaz;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,7 +18,9 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import com.github.lgooddatepicker.components.TimePicker;
@@ -91,20 +94,44 @@ public class registrarHorarios extends JFrame {
 				JFrame frame = new JFrame();
 				Cita cita;
 				SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
+				
 				String fecha = dFormat.format(fechaCita.getDate());
 				String hora = horaCita.getText();
 				cita = new Cita(fecha, hora);
+				
+				///////////////////////Datos de la fecha actual
+				Date fechaActual = new Date();
+				String fecha2 = dFormat.format(fechaActual);	
 				try {
-					if (cita.verificarHorario()) {
-						JOptionPane.showMessageDialog(frame, "Horario existente");
-					}else {
-						cita.crearHorario();
-						JOptionPane.showMessageDialog(frame, "Nuevo Horario Creado");
+					Date fechaActual2 = dFormat.parse(fecha2);
+					Date fechaHorario = dFormat.parse(fecha);
+					
+					if (fechaHorario.compareTo(fechaActual2) > 0) {
+						if (cita.verificarHorario()) {
+							JOptionPane.showMessageDialog(frame, "Horario existente");
+						}else {
+							cita.crearHorario();
+							JOptionPane.showMessageDialog(frame, "Nuevo Horario Creado");
+						}
+						
+					}else if (fechaHorario.compareTo(fechaActual2) < 0){
+						JOptionPane.showMessageDialog(frame, "El horario ya caduco.");
+
+						
+					}else if (fechaHorario.compareTo(fechaActual2) == 0) {
+						if (cita.verificarHorario()) {
+							JOptionPane.showMessageDialog(frame, "Horario existente");
+						}else {
+							cita.crearHorario();
+							JOptionPane.showMessageDialog(frame, "Nuevo Horario Creado");
+						}
 					}
-				} catch (SQLException e1) {
+				} catch (ParseException | HeadlessException | SQLException e2) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}				
+					e2.printStackTrace();
+				}
+				///////////////////////Datos de la fecha actual
+							
 			}
 		});
 		botonRegistrarHorario.setBounds(35, 161, 159, 29);
