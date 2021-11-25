@@ -99,6 +99,12 @@ public class cancelarCita extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuDoctor(pcedula).setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(182, 114, 117, 29);
 		contentPane.add(botonRegresar);
 		

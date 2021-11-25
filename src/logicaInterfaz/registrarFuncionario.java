@@ -22,6 +22,7 @@ import com.toedter.calendar.JDateChooser;
 
 import logicanegocios.CentroAtencion;
 import logicanegocios.Funcionario;
+import logicanegocios.Usuario;
 
 
 public class registrarFuncionario extends JFrame {
@@ -31,6 +32,8 @@ public class registrarFuncionario extends JFrame {
 	private JTextField campoTextoNombre;
 	private JTextField campoTextoAreaTrabajo;
 	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField tempPassTextField;
 
 	/**
 	 * Launch the application.
@@ -216,18 +219,28 @@ public class registrarFuncionario extends JFrame {
 		lblNewLabel_6.setBounds(470, 70, 111, 14);
 		contentPane.add(lblNewLabel_6);
 		
-		textField = new JTextField();
-		textField.setBounds(591, 67, 208, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		tempPassTextField = new JTextField();
+		tempPassTextField.setBounds(591, 67, 208, 20);
+		contentPane.add(tempPassTextField);
+		tempPassTextField.setColumns(10);
+		
+		
 		
 		JButton btnCrearCuenta = new JButton("Crear cuenta");
 		btnCrearCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Usuario user = new Usuario();
+				user.setCedula(Integer.parseInt(campoTextoCedula.getText()));
+				user.setContrasenna(tempPassTextField.getText());
+				user.setRol(comboBoxTipoFuncionario.getSelectedItem().toString());
+				user.registrarUsuario(user);
 			}
 		});
 		btnCrearCuenta.setBounds(478, 352, 117, 29);
 		contentPane.add(btnCrearCuenta);
+		
+		
+		
+		
 	}
 }

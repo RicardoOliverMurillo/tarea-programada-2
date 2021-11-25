@@ -103,7 +103,7 @@ public class cancelarCitaCentroMedico extends JFrame {
 		botonRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new menuDoctor().setVisible(true);
+				new menuDoctor(Integer.parseInt(pCedula)).setVisible(true);
 			}
 		});
 		botonRegresar.setBounds(296, 144, 117, 29);

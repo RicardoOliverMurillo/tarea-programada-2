@@ -92,7 +92,7 @@ public class realizarCita extends JFrame {
 		botonRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new menuDoctor().setVisible(true);
+				new menuDoctor(pcedula).setVisible(true);
 			}
 		});
 		botonRegresar.setBounds(296, 144, 117, 29);

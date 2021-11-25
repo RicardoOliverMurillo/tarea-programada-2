@@ -41,7 +41,11 @@ public class registrarCatalogoDiagnostico extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public registrarCatalogoDiagnostico() {
+		
+	}
+	public registrarCatalogoDiagnostico(int pCedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 504, 194);
 		contentPane = new JPanel();
@@ -58,6 +62,13 @@ public class registrarCatalogoDiagnostico extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuDoctor(pCedula).setVisible(true);
+				
+			}
+		});
 		botonRegresar.setBounds(363, 112, 117, 29);
 		contentPane.add(botonRegresar);
 		

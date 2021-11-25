@@ -48,7 +48,12 @@ public class registrarVacuna extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public registrarVacuna() {
+		
+	}
+	
+	public registrarVacuna(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 417, 397);
 		contentPane = new JPanel();
@@ -68,7 +73,7 @@ public class registrarVacuna extends JFrame {
 		botonRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new menuDoctor().setVisible(true);
+				new menuDoctor(pcedula).setVisible(true);
 			}
 		});
 		botonRegresar.setBounds(248, 314, 117, 29);

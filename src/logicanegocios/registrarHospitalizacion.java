@@ -151,6 +151,11 @@ public class registrarHospitalizacion {
 		return action.getHospitalizacionesRegistradasDAO(query);
 	}
 	
+	public List<registrarHospitalizacion> getHospitalizacionesRegistradasDiagnostico(int pCedulaPaciente ) {
+		String query = "SELECT TOP 1 * FROM Hospitalizaciones WHERE ID_Paciente = " + pCedulaPaciente + "ORDER BY ID_Hospitalizacion DESC" + ";";
+		return action.getHospitalizacionesRegistradasDiagnostico(query);
+	}
+	
 	public List<registrarHospitalizacion> getIDHospitalizacion(String pFechaInicio) {
 		String query = "SELECT TOP 1 * FROM Hospitalizaciones WHERE FechaInicio  = " + pFechaInicio+ ";";
 		return action.getHospitalizacionesRegistradasBYID(query);

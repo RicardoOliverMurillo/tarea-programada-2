@@ -59,7 +59,11 @@ public class registrarCatalogoTratamiento extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public registrarCatalogoTratamiento() {
+		
+	}
+	public registrarCatalogoTratamiento(int pCedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 606, 273);
 		contentPane = new JPanel();
@@ -76,7 +80,14 @@ public class registrarCatalogoTratamiento extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuDoctor(pCedula).setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(19, 172, 117, 29);
+		
 		contentPane.add(botonRegresar);
 		
 		campoTextoInformacion = new JTextField();

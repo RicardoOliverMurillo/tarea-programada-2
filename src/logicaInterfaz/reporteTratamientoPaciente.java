@@ -178,11 +178,12 @@ public class reporteTratamientoPaciente extends JFrame {
 		btnBuscar.setBounds(542, 172, 111, 29);
 		contentPane.add(btnBuscar);
 				
-/*		JButton btnGenerarCSV = new JButton("Generar CSV");
+		JButton btnGenerarCSV = new JButton("Generar CSV");
 		btnGenerarCSV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(infoDiagnostico.size()>0) {
-					documento.csvGenerator(infoDiagnostico);
+				if(infoTratamiento.size()>0) {
+					String[] header = {"ID Tratamiento", "Nombre", "Dosis", "Tipo tratamiento","Cedula Paciente", "Fecha"};
+					documento.dataCSV(infoTratamiento, header, "ReporteTratamientos");
 					JOptionPane.showMessageDialog(null, "El CSV se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
@@ -196,8 +197,15 @@ public class reporteTratamientoPaciente extends JFrame {
 		JButton btnGenerarHtml = new JButton("Generar HTML");
 		btnGenerarHtml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(infoDiagnostico.size()>0) {
-					documento.htmlFormat(infoDiagnostico);
+				if(infoTratamiento.size()>0) {
+					ArrayList<String> header = new ArrayList<String>();
+					header.add("ID Tratamiento");
+					header.add("Nombre");
+					header.add("Dosis");
+					header.add("Tipo tratamiento");
+					header.add("Cedula Paciente");
+					header.add("Fecha");
+					documento.htmlFormat(new Documento().rowsContentData(infoTratamiento), header, "ReporteTratamientos");
 					JOptionPane.showMessageDialog(null, "El HTML se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
@@ -211,8 +219,15 @@ public class reporteTratamientoPaciente extends JFrame {
 		JButton btnGenerarPdf = new JButton("Generar PDF");
 		btnGenerarPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(infoDiagnostico.size()>0) {
-					documento.generatePDF(infoDiagnostico);
+				if(infoTratamiento.size()>0) {
+					ArrayList<String> header = new ArrayList<String>();
+					header.add("ID Diagnostico");
+					header.add("Nombre");
+					header.add("Nivel");
+					header.add("Observaciones");
+					header.add("Cedula Paciente");
+					header.add("Fecha");
+					documento.generateDataPDF(infoTratamiento, header, "ReporteTratamientos");
 					JOptionPane.showMessageDialog(null, "El PDF se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
@@ -221,7 +236,7 @@ public class reporteTratamientoPaciente extends JFrame {
 		});
 		btnGenerarPdf.setBounds(263, 64, 117, 21);
 		contentPane.add(btnGenerarPdf);
-	*/
+	
 		
 		JButton btnLimpiarFiltros = new JButton("Limpiar Filtros");
 		btnLimpiarFiltros.addActionListener(new ActionListener() {

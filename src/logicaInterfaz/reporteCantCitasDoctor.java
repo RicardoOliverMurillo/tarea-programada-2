@@ -85,7 +85,7 @@ public class reporteCantCitasDoctor extends JFrame {
 	
 	public reporteCantCitasDoctor() {}
 
-	public reporteCantCitasDoctor(int pcedula) {
+public reporteCantCitasDoctor(int pcedula) {
 		
 		loadHeaders();
 		
@@ -233,7 +233,7 @@ public class reporteCantCitasDoctor extends JFrame {
 		btnGenerarHtml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(citasinfo.size()>0) {
-					documento.htmlFormat(citasinfo, headersReportes);
+					documento.htmlFormat(new Documento().rowsContentCitas(citasinfo), headersReportes, "ReporteCitas");
 					JOptionPane.showMessageDialog(null, "El HTML se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
@@ -248,7 +248,7 @@ public class reporteCantCitasDoctor extends JFrame {
 		btnGenerarPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(citasinfo.size()>0) {
-					documento.generatePDF(citasinfo);
+					//documento.generatePDF(citasinfo);
 					JOptionPane.showMessageDialog(null, "El PDF se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
