@@ -20,11 +20,12 @@ import logicanegocios.Cita;
 public class Documento{
 	
 	public void csvGenerator(List<String[]> csvData, String fileName) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter("C:\\Users\\joseo\\Desktop\\Progra2\\"+fileName+".csv"))) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter("C:\\Users\\joseo\\Desktop\\Progra2_Reportes\\"+fileName+".csv"))) {
             writer.writeAll(csvData);
         } catch (IOException e) {
 			e.printStackTrace();
 		} 
+        
 	}
 	
 	public void dataCitasCSV(List<Cita> dataCitas) {
@@ -46,9 +47,8 @@ public class Documento{
 		csvGenerator(stringData, "ReporteCitas");
 	}
 	
-	public List<String[]> diagnostico(List<List<String>> data) {
+	public void dataCSV(List<List<String>> data, String[] header, String fileName) {
 		List<String[]> stringData = new ArrayList<String[]>();
-		String[] header = {"ID Diagnostico", "Nombre", "Nivel", "Observaciones","Cedula Paciente", "Fecha"};
 		stringData.add(header);
 		
 		for(int i = 0; i<data.size(); i++) {
@@ -63,26 +63,9 @@ public class Documento{
 			stringData.add(row);
 		}
 		
-		return stringData;
+		csvGenerator(stringData, fileName);
 	}
-	
-	public List<String[]> dataCSV(List<Cita> dataCitas) {
-		List<String[]> stringData = new ArrayList<String[]>();
-		for(int i = 0; i<dataCitas.size(); i++) {
-			String[] row = {
-					Integer.toString(dataCitas.get(i).getCedula()), 
-					dataCitas.get(i).getEspecialidad(), 
-					dataCitas.get(i).getEstado(), 
-					dataCitas.get(i).getFecha(),
-					dataCitas.get(i).getObservacion()
-					};
-			stringData.add(row);
-		}
-		
-		return stringData;
-	}
-	public void htmlFormat(List<Cita> data, ArrayList<String> headers) {
-		String rows = rowsContent (data);
+	public void htmlFormat(String rows, ArrayList<String> headers, String fileName) {
 		String tableHeaders = tableHeaders(headers);
 		
 		String htmlContent = "<!DOCTYPE html>\r\n"
@@ -118,7 +101,7 @@ public class Documento{
 				+ "    </table>\r\n"
 				+ "</body>\r\n"
 				+ "</html>";
-		File f = new File("C:\\Users\\joseo\\Desktop\\Progra2\\ReporteCitas.html");
+		File f = new File("C:\\Users\\joseo\\Desktop\\Progra2_Reportes\\"+fileName+".html");
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 			bw.write(htmlContent);
@@ -140,7 +123,7 @@ public class Documento{
 		return tableHeaders;
 	}
 	
-	public String rowsContent (List<Cita> data) {
+	public String rowsContentCitas (List<Cita> data) {
 		
 		String rows = "";
 		
@@ -157,15 +140,42 @@ public class Documento{
 		return rows;
 	}
 	
-	private void addTableHeader(PdfPTable table) {
-	    Stream.of("Cedula", "Especialidad", "Estado", "Fecha","Observación")
-	      .forEach(columnTitle -> {
-	        PdfPCell header = new PdfPCell();
-	        header.setBackgroundColor(BaseColor.LIGHT_GRAY);
-	        header.setBorderWidth(2);
-	        header.setPhrase(new Phrase(columnTitle));
-	        table.addCell(header);
-	    });
+	public String rowsContentData (List<List<String>> data) {
+		String rows = "";
+		
+		for (int i = 0; i<data.size(); i++) {
+			rows += "<tr>"
+					+ "<td>"+data.get(i).get(0)+"</td>"
+					+ "<td>"+data.get(i).get(1)+"</td>"
+					+ "<td>"+data.get(i).get(2)+"</td>"
+					+ "<td>"+data.get(i).get(3)+"</td>"
+					+ "<td>"+data.get(i).get(4)+"</td>"
+					+ "<td>"+data.get(i).get(5)+"</td>"
+					+ "</tr>";
+		}		
+		return rows;
+	}
+	
+	private void addTableHeader(PdfPTable table, ArrayList<String> headers) {
+		if(headers.size() == 5) {			
+			Stream.of(headers.get(0), headers.get(1), headers.get(2), headers.get(3), headers.get(4))
+			.forEach(columnTitle -> {
+				PdfPCell header = new PdfPCell();
+				header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+				header.setBorderWidth(2);
+				header.setPhrase(new Phrase(columnTitle));
+				table.addCell(header);
+			});
+		} else {			
+			Stream.of(headers.get(0), headers.get(1), headers.get(2), headers.get(3), headers.get(4), headers.get(5))
+			.forEach(columnTitle -> {
+				PdfPCell header = new PdfPCell();
+				header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+				header.setBorderWidth(2);
+				header.setPhrase(new Phrase(columnTitle));
+				table.addCell(header);
+			});
+		}
 	}
 	
 	private void addRows(PdfPTable table, List<Cita> data) {
@@ -178,15 +188,26 @@ public class Documento{
 		}
 	}
 	
-	public void generatePDF(List<Cita> data) {
+	private void addRowsData(PdfPTable table, List<List<String>> data) {
+		for (int i = 0; i<data.size(); i++) {			
+			table.addCell(data.get(i).get(0));
+			table.addCell(data.get(i).get(1));
+			table.addCell(data.get(i).get(2));
+			table.addCell(data.get(i).get(3));
+			table.addCell(data.get(i).get(4));
+			table.addCell(data.get(i).get(5));
+		}
+	}
+	
+	public void generateCitasPDF(List<Cita> data, ArrayList<String> headers, String fileName) {
 		Document document = new Document();
 		try {
-			PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\joseo\\Desktop\\Progra2\\report.pdf"));
+			PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\joseo\\Desktop\\Progra2_Reportes\\"+fileName+".pdf"));
 	
 			document.open();
 	
 			PdfPTable table = new PdfPTable(5);
-			addTableHeader(table);
+			addTableHeader(table, headers);
 			addRows(table, data);
 	
 			document.add(table);
@@ -195,25 +216,25 @@ public class Documento{
 			e.printStackTrace();
 		}
 	}
-	public void diagnosticoCSV(List<List<String>> data) {
-		List<String[]> stringData = new ArrayList<String[]>();
-		String[] header = {"ID Diagnostico", "Nombre", "Nivel", "Observaciones","Cedula Paciente", "Fecha"};
-		stringData.add(header);
-		
-		for(int i = 0; i<data.size(); i++) {
-			String[] row = {
-					data.get(i).get(0), 
-					data.get(i).get(1), 
-					data.get(i).get(2), 
-					data.get(i).get(3),
-					data.get(i).get(4),
-					data.get(i).get(5)
-					};
-			stringData.add(row);
+	
+	public void generateDataPDF(List<List<String>> data, ArrayList<String> headers, String fileName) {
+		Document document = new Document();
+		try {
+			PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\joseo\\Desktop\\Progra2_Reportes\\"+fileName+".pdf"));
+	
+			document.open();
+	
+			PdfPTable table = new PdfPTable(6);
+			addTableHeader(table, headers);
+			addRowsData(table, data);
+	
+			document.add(table);
+			document.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		csvGenerator(stringData, "ReporteCitas");
 	}
+	
 	
 	
 }

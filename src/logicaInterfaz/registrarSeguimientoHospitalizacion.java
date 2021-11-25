@@ -9,8 +9,9 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
-import logicanegocios.CatalogoDiagnosticos;
-import logicanegocios.Cita;
+import logicadao.daoCatalogoTratamientos;
+import logicanegocios.*;
+
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -30,6 +31,13 @@ public class registrarSeguimientoHospitalizacion extends JFrame {
 	private JTextField textField;
 	logicanegocios.registrarHospitalizacion objRegistrarHospitalizacion = new logicanegocios.registrarHospitalizacion();
 	logicanegocios.registrarHospitalizacion objRegistrarHospitalizacion2 = new logicanegocios.registrarHospitalizacion();
+	
+	String idTratamiento;
+	daoCatalogoTratamientos daoCatalogoTratamientos = new daoCatalogoTratamientos();
+	
+	CatalogoTratamientos objCatalogoTratamientos = new CatalogoTratamientos();
+	
+	String resultado = null;
 
 	/**
 	 * Launch the application.
@@ -62,6 +70,17 @@ public class registrarSeguimientoHospitalizacion extends JFrame {
 		return registrosCitas;
 	}
 	
+	public List<String> getHospitalizacionesDiagnostico(String pCedula) throws SQLException {
+		List<logicanegocios.registrarHospitalizacion> diagnosticos = objRegistrarHospitalizacion.getHospitalizacionesRegistradasDiagnostico(Integer.parseInt(pCedula));
+		List<String> registrosCitas = new ArrayList();
+		for (int i = 0; i<diagnosticos.size(); i++) {
+			//System.out.println(diagnosticos.get(i).getDiagnostico());
+			registrosCitas.add(diagnosticos.get(i).getFechaInicio());
+		}
+		//System.out.println(registrosCitas);
+		return registrosCitas;
+	}
+	
 	
 	
 	public List<String> getHospitalizacionesX(String pFechaInicio) throws SQLException {
@@ -73,7 +92,9 @@ public class registrarSeguimientoHospitalizacion extends JFrame {
 		return registrosCitas;
 	}
 	
-	public registrarSeguimientoHospitalizacion() {
+	public registrarSeguimientoHospitalizacion() {}
+	
+	public registrarSeguimientoHospitalizacion(int pCedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 590, 520);
 		contentPane = new JPanel();
@@ -104,6 +125,12 @@ public class registrarSeguimientoHospitalizacion extends JFrame {
 		
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuDoctor(pCedula).setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(35, 441, 117, 29);
 		contentPane.add(botonRegresar);
 		
@@ -141,7 +168,7 @@ public class registrarSeguimientoHospitalizacion extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String resultado;
+				
 				
 				JFrame frame = new JFrame();
 				int contador = 0;
@@ -150,10 +177,46 @@ public class registrarSeguimientoHospitalizacion extends JFrame {
 					diagnosticosRegistrados = getHospitalizaciones(textField.getText());
 						while (diagnosticosRegistrados.size() > contador) {
 							resultado = diagnosticosRegistrados.get(contador);
-							System.out.println(resultado);
+							System.out.println("ID de la Hospitalizacion: " + resultado);
 							contador +=1;
 						}
 					} catch (NumberFormatException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				String resultado2 = null;
+				
+				JFrame frame2 = new JFrame();
+				int contador2 = 0;
+				List<String> diagnosticosRegistrados2;
+				try {
+					diagnosticosRegistrados2 = getHospitalizacionesDiagnostico(textField.getText());
+						while (diagnosticosRegistrados2.size() > contador2) {
+							resultado2 = diagnosticosRegistrados2.get(contador2);
+							System.out.println("ID del diagnostico de la hospitalizacion: " + resultado2);
+							contador2 +=1;
+						}
+					} catch (NumberFormatException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				JFrame frame3 = new JFrame();
+				int contador3 = 0;
+				List<String> tratamientosRegistrados;
+				List<CatalogoTratamientos> diagnosticos = objCatalogoTratamientos.getTratamientosRegistrados(resultado2);
+				List<String> registrosCitas = new ArrayList();
+				for (int i = 0; i<diagnosticos.size(); i++) {
+					registrosCitas.add(diagnosticos.get(i).getNombre());
+				}
+				try {
+					tratamientosRegistrados = registrosCitas;
+						while (tratamientosRegistrados.size() > contador3) {
+							comboBoxTratamiento.addItem(tratamientosRegistrados.get(contador3));
+							contador3 +=1;
+						}
+					} catch (NumberFormatException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -167,20 +230,26 @@ public class registrarSeguimientoHospitalizacion extends JFrame {
 		botonRegistrarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				
 				SimpleDateFormat  dFormat = new SimpleDateFormat("dd-MM-yyyy");
 				String fecha = dFormat.format(fechaSeguimiento.getDate());
+				
+				idTratamiento = daoCatalogoTratamientos.getIdTratamiento(comboBoxTratamiento.getSelectedItem().toString().toString());
+				
+			
+				logicanegocios.RegistrarSeguimientoHospitalizaciones seguimientoHospitalizacion = new logicanegocios.RegistrarSeguimientoHospitalizaciones(resultado, fecha, Integer.toString(pCedula),  campoTextoObservacion.getText(),  idTratamiento);
+				seguimientoHospitalizacion.crearRegistrarHospitalizacion();
+				dispose();
+				new menuDoctor(pCedula).setVisible(true);
+				
+				
+				
+				
 				
 				
 			}
 		});
 		botonRegistrarCita.setBounds(343, 441, 149, 29);
 		contentPane.add(botonRegistrarCita);
-		
-		JButton btnNewButton_1 = new JButton("Buscar");
-		btnNewButton_1.setBounds(427, 298, 89, 23);
-		contentPane.add(btnNewButton_1);
 		
 		
 		

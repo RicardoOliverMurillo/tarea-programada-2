@@ -35,9 +35,7 @@ public class menuDoctor extends JFrame {
 			}
 		});
 	}
-	public menuDoctor() {
-		
-	}
+	public menuDoctor() {}
 	
 	/**
 	 * Create the frame.
@@ -125,10 +123,40 @@ public class menuDoctor extends JFrame {
 		botonVacuna.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new registrarVacuna().setVisible(true);
+				new registrarVacuna(pcedula).setVisible(true);
 			}
 		});
 		botonVacuna.setBounds(292, 199, 117, 29);
 		contentPane.add(botonVacuna);
+		
+		JButton btnNewButton = new JButton("Registrar Diagn\u00F3sticos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new registrarCatalogoDiagnostico(pcedula).setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(280, 283, 148, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Registrar Tratamientos");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new registrarCatalogoTratamiento(pcedula).setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(280, 317, 148, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Registrar Seguimientos de Hospitalizaciones");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new registrarSeguimientoHospitalizacion(pcedula).setVisible(true);
+			}
+		});
+		btnNewButton_2.setBounds(194, 351, 289, 23);
+		contentPane.add(btnNewButton_2);
 	}
 }

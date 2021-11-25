@@ -103,5 +103,15 @@ public class menuAdministrador extends JFrame {
 		});
 		btnRegistrarPaciente.setBounds(204, 184, 186, 23);
 		contentPane.add(btnRegistrarPaciente);
+		
+		JButton btnNewButton = new JButton("Registrar Especialidades");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new registrarAreasTrabajoHospitales().setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(204, 228, 186, 23);
+		contentPane.add(btnNewButton);
 	}
 }

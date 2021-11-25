@@ -47,6 +47,24 @@ public class daoRegistrarHospitalizacion {
 		return diagnosticoRegistrado;
 	}
 	
+	public List<registrarHospitalizacion> getHospitalizacionesRegistradasDiagnostico(String query) {
+		List<registrarHospitalizacion> diagnosticoRegistrado = new ArrayList<registrarHospitalizacion>();
+		try {
+			Connection conn = new Conexion().conexionBaseDatos();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				registrarHospitalizacion objDiagnostico = new registrarHospitalizacion((Integer.toString(rs.getInt("Diagnostico"))));
+				System.out.println("Get Fecha de Inicio: " + objDiagnostico.getIdFuncionario());
+				diagnosticoRegistrado.add(objDiagnostico);
+			}
+			return diagnosticoRegistrado;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return diagnosticoRegistrado;
+	}
+	
 	public List<registrarHospitalizacion> getHospitalizacionesRegistradasBYID(String query) {
 		List<registrarHospitalizacion> diagnosticoRegistrado = new ArrayList<registrarHospitalizacion>();
 		try {

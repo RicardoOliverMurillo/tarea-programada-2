@@ -21,6 +21,7 @@ import com.toedter.calendar.JDateChooser;
 
 import logicanegocios.Funcionario;
 import logicanegocios.Paciente;
+import logicanegocios.Usuario;
 
 public class registrarPaciente extends JFrame {
 
@@ -232,7 +233,16 @@ public class registrarPaciente extends JFrame {
 		tempPassTextField.setColumns(10);
 		
 		JButton btnCrearCuenta = new JButton("Crear cuenta");
-		btnCrearCuenta.setBounds(577, 263, 98, 29);
+		btnCrearCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario user = new Usuario();
+				user.setCedula(Integer.parseInt(campoTextoCedula.getText()));
+				user.setContrasenna(tempPassTextField.getText());
+				user.setRol("paciente");
+				user.registrarUsuario(user);
+			}
+		});
+		btnCrearCuenta.setBounds(533, 263, 142, 29);
 		contentPane.add(btnCrearCuenta);
 		
 		

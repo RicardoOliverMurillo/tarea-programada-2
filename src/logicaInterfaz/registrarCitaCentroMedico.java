@@ -152,6 +152,12 @@ public class registrarCitaCentroMedico extends JFrame {
 		contentPane.add(botonRegistrarCita);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//dispose();
+				//new menuDoctor(pcedula).setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(292, 334, 117, 29);
 		contentPane.add(botonRegresar);
 		

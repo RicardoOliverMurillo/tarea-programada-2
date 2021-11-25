@@ -97,6 +97,7 @@ public class registrarCita extends JFrame {
 	public registrarCita() {
 		
 	}
+	
 	public registrarCita(int pcedula) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 437);
@@ -199,6 +200,12 @@ public class registrarCita extends JFrame {
 		contentPane.add(botonRegistrarCita);
 		
 		JButton botonRegresar = new JButton("Regresar");
+		botonRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new menuDoctor(pcedula).setVisible(true);
+			}
+		});
 		botonRegresar.setBounds(294, 358, 117, 29);
 		contentPane.add(botonRegresar);
 		

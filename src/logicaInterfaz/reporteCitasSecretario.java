@@ -214,16 +214,16 @@ public class reporteCitasSecretario extends JFrame {
 		contentPane.add(btnBuscar);
 				
 		JButton btnGenerarCSV = new JButton("Generar CSV");
-//		btnGenerarCSV.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				if(citasinfo.size()>0) {
-//					documento.csvGenerator(citasinfo);
-//					JOptionPane.showMessageDialog(null, "El CSV se genero con exito");
-//				}else{
-//					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
-//				}
-//			}
-//		});
+		btnGenerarCSV.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(citasinfo.size()>0) {
+					documento.dataCitasCSV(citasinfo);
+					JOptionPane.showMessageDialog(null, "El CSV se genero con exito");
+				}else{
+					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
+				}
+			}
+		});
 		btnGenerarCSV.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnGenerarCSV.setBounds(10, 64, 111, 21);
 		contentPane.add(btnGenerarCSV);
@@ -232,7 +232,7 @@ public class reporteCitasSecretario extends JFrame {
 		btnGenerarHtml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(citasinfo.size()>0) {
-					documento.htmlFormat(citasinfo, headersReportes);
+					documento.htmlFormat(new Documento().rowsContentCitas(citasinfo), headersReportes, "ReporteCitas");
 					JOptionPane.showMessageDialog(null, "El HTML se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
@@ -247,7 +247,7 @@ public class reporteCitasSecretario extends JFrame {
 		btnGenerarPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(citasinfo.size()>0) {
-					documento.generatePDF(citasinfo);
+					documento.generateCitasPDF(citasinfo, headersReportes, "ReporteCitas");
 					JOptionPane.showMessageDialog(null, "El PDF se genero con exito");
 				}else{
 					JOptionPane.showMessageDialog(null, "No se posee los datos requeridos");
